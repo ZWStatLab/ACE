@@ -31,7 +31,7 @@ if __name__ == '__main__':
         'DEPICT_hyper': datasets_depict,
     }
 
-    metric_list = ['ccc','dunn','cind','db','sdbw', 'ccdbw']
+    metric_list = ['ccc','dunn','cind', 'sdbw', 'ccdbw']
 
 
     for task in datasets_all.keys():
