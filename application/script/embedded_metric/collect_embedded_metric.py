@@ -34,7 +34,7 @@ if __name__ == '__main__':
         return defaultdict(dict)
 
 
-    metric_list = ['ccc','dunn','cind','db','sdbw', 'ccdbw']
+    metric_list = ['ccc','dunn','cind', 'sdbw', 'ccdbw']
 
 
 
