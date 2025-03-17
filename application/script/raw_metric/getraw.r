@@ -179,14 +179,9 @@ if (grepl('COIL-100', key)){
 
 print('ccc')
 dunn = Dunn(md, cl1, Data=jeu, method=NULL) #max Index.dunn(md, cl1); depend on md matrix
-dunn2 = Dunn(cmd, cl1, Data=jeu, method=NULL) #max Index.dunn(md, cl1); depend on md matrix
 print('dunn')
 cind = - Cindex(d=md, cl=cl1) #min #depend on md matrix
-cind2 = - Cindex(d=cmd, cl=cl1) #min #depend on md matrix
 print('cind')
-#db = - Indice.DB(x=jeu, cl=cl1, d = NULL, centrotypes = "centroids", p = 2, q = 2)$DB #min #need data
-db = - DB(x=jeu, cl=cl1) #min #need data
-print('db')
 sdbw = - SDbw(jeu, cl1) #min # need data
 print('sdbw')
 ccdbw = CDbw(jeu, cl1) #max # need data
@@ -196,6 +191,5 @@ print('done')
 
 np$savez(paste0(task,"/raw_tmp/rr_", key, ".npz"), ccc=ccc,
   dunn=dunn, cind=cind,
-  dunn2=dunn2, cind2=cind2,
-  db=db,sdbw=sdbw, ccdbw=ccdbw,
+  sdbw=sdbw, ccdbw=ccdbw,
   models=args)
