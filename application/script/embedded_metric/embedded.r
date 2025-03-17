@@ -84,13 +84,9 @@ print(unique(cl1))
 ccc = WBT(x=jeu, cl=cl1, P=TT,s=ss,vv=vv) #max
 print('ccc')
 dunn = Index.dunn(md, cl1, Data=jeu, method=NULL) #max Index.dunn(md, cl1); depend on md matrix
-dunn2 = Index.dunn(cmd, cl1, Data=jeu, method=NULL) #max Index.dunn(md, cl1); depend on md matrix
-  print('dunn')
+print('dunn')
 cind = - Indice.cindex(d=md, cl=cl1) #min #depend on md matrix
-cind2 = - Indice.cindex(d=cmd, cl=cl1) #min #depend on md matrix
-  print('cind')
-db = - Indice.DB(x=jeu, cl=cl1, d = NULL, centrotypes = "centroids", p = 2, q = 2)$DB #min #need data
-  print('db')
+print('cind')
 sdbw = - SDbw(jeu, cl1) #min # need data
 print('sdbw')
 ccdbw = CDbw(jeu, cl1) #max # need data
@@ -102,6 +98,5 @@ print('done')
 
 np$savez(paste0(task,"/tmp/rr_", m, "_", key, ".npz"), ccc=ccc,
   dunn=dunn, cind=cind,
-  dunn2=dunn2, cind2=cind2,
-  db=db,sdbw=sdbw, ccdbw=ccdbw,
+  sdbw=sdbw, ccdbw=ccdbw,
   models=args)
