@@ -20,11 +20,11 @@ for option in options:
             outf = open(jobName,'w')
             outf.write('#!/bin/bash\n')
             outf.write('\n')
-            if 'dense' in options:
+            if option == 'dense':
                 outf.write('#SBATCH --partition=stats_long\n')
             else:
                 outf.write('#SBATCH --partition=stats_medium\n')
-            if 'dense' in options:
+            if option == 'dense':
                 outf.write('#SBATCH --nodes=1 --mem=16G --time=168:00:00\n')
             else:
                 outf.write('#SBATCH --nodes=1 --mem=16G --time=24:00:00\n')
