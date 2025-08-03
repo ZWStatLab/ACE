@@ -191,7 +191,7 @@ def collect_raw_files(eval_data, root='raw_metric'):
 
 def sort_and_match(obj, modelFiles):
     '''
-    sort the object according to the order in modelFiles
+    sort the obj
     '''
     new_obj = {key: value for key, value in obj.items() if key in modelFiles}
     new_obj = dict(sorted(new_obj.items(), key=lambda item: item[0]))
