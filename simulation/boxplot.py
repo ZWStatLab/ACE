@@ -13,8 +13,8 @@ tasksv = {'sim_dense_1.0': r'Example 2 ($\sigma = 1$)','sim_dense_2.0': 'Example
 
 strategys= ['raw', 'pair', 'pool', 'ace']
 strategys_legend= ['Raw score', 'Paired score', 'Pooled score', 'ACE', 'True K']
-index = ['Silhouette score (cosine distance)', 'Silhouette score (euclidean distance)', 'Davies-Bouldin index', 'Calinski-Harabasz index']
-index2 = ['Silhouette (cosine)', 'Silhouette (euclidean)', 'Davies-Bouldin', 'Calinski-Harabasz']
+index = ['Davies-Bouldin', 'Calinski-Harabasz', 'Silhouette (cosine)', 'Silhouette (euclidean)']
+
 
 strategy_colors = {
 #'Horovod': "g",
@@ -71,7 +71,7 @@ for ext in ['nmi', 'acc']:
             new_ylim = (current_ylim[0] - 0.1, current_ylim[1])
             ax.set_ylim(new_ylim)
             ax.set_xticks([(group_gap * i) + 1.5 for i in range(4)])  # Tick at the middle of each group
-            ax.set_xticklabels([index2[i] for i in range(len(index2))], fontsize=14, fontweight='bold')
+            ax.set_xticklabels([index[i] for i in range(len(index))], fontsize=14, fontweight='bold')
             ax.set_title(tasksv[task], fontsize=16, fontweight='bold')
             for spine in ax.spines.values():
                 spine.set_linewidth(2)  # Bold frame

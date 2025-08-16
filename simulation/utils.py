@@ -133,6 +133,8 @@ def page_rank(affinity):
         pr = nx.pagerank(G, alpha=0.9)
         pr=dict(sorted(pr.items(), key=lambda item: item[0]))
         pr = list(pr.values())
+        if np.any(np.array(pr) < 0):
+            pr = [1 / n for _ in range(n)]
         return np.array(pr)
     except:
         pr = [1/n for _ in range(n)]
@@ -148,6 +150,11 @@ def hits(affinity):
         pr, pra = nx.hits(G)
         pr = dict(sorted(pra.items(), key=lambda item: item[0]))
         pr = list(pr.values())
+        if np.any(np.array(pr) < 0):
+            if np.all(np.array(pr) < 0):
+                pr = - np.array(pr)
+            else:
+                pr = [1 / n for _ in range(n)]
         return np.array(pr)
     except:
         pr = [1/n for _ in range(n)]
