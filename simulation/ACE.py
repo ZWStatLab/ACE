@@ -33,7 +33,6 @@ if __name__ == '__main__':
     l = 0
     nrep = 50
     taus_all, corrs_all = [], []
-    # for task, root_path in tasks.items():
     nested_dict = lambda: defaultdict(nested_dict)
     box_nmi = nested_dict()
     box_acc = nested_dict()
@@ -64,9 +63,7 @@ if __name__ == '__main__':
 
                 raw_results = process_raw(raw_truth[metric])
                 _, _, raw_score = sort_and_match(raw_results, modelFiles)
-                #print(raw_score)
                 raw_score = np.where(np.isinf(raw_score) & (raw_score < 0), np.nan, raw_score)
-                #print(raw_score)
                 raw_score_min = np.nanmin(raw_score)
                 raw_score = np.nan_to_num(raw_score, nan=raw_score_min)
 
@@ -109,10 +106,6 @@ if __name__ == '__main__':
                 _, _, pool_score = sort_and_match(pool_score, modelFiles)
 
                 # get ACE scores
-                # is_constant = np.any(np.all(scores == scores[:, [0]], axis=1))
-                # if is_constant:
-                #     print(nmv, acv)
-                #     continue
                 if len(spaceFiles) == 1: 
                     ace_score = {}
                     for i, m in enumerate(modelFiles):
@@ -125,7 +118,6 @@ if __name__ == '__main__':
 
                 # get the evaluate performance
                 # NMI
-                #print(task, metric, eval_data, nmv, ace_score, pair_score, raw_score)
                 tau_pool, _ = kendalltau(pool_score, nmv)
                 tau_pool_before, _ = kendalltau(pool_score_before, nmv)
                 tau_ace_score, _ = kendalltau(ace_score, nmv)
@@ -149,15 +141,10 @@ if __name__ == '__main__':
                 cor_ace_score1, _ = spearmanr(ace_score, acv)
                 cor_pair_score1, _ = spearmanr(pair_score, acv)
                 cor_raw_score1, _ = spearmanr(raw_score, acv)
-
-                tau = [eval_data, tau_ace_score, tau_pool, tau_pool_before, tau_pair_score, tau_raw_score, tau_ace_score1, tau_pool1,  tau_pool1_before, tau_pair_score1, tau_raw_score1]
-                corr = [eval_data, cor_ace_score, cor_pool, cor_pool_before, cor_pair_score, cor_raw_score, cor_ace_score1, cor_pool1, cor_pool1_before, cor_pair_score1, cor_raw_score1]
                 ##
                 modelFiles = sorted(modelFiles)
                 tau = [eval_data, tau_ace_score, tau_pool, tau_pool_before, tau_pair_score, tau_raw_score, tau_ace_score1, tau_pool1,  tau_pool1_before, tau_pair_score1, tau_raw_score1]
                 corr = [eval_data, cor_ace_score, cor_pool, cor_pool_before, cor_pair_score, cor_raw_score, cor_ace_score1, cor_pool1, cor_pool1_before, cor_pair_score1, cor_raw_score1]
-                #taus_again.append(tau)
-                #corrs_again.append(corr)
                 tau_avg.append(tau[1:])
                 corr_avg.append(corr[1:])
 
