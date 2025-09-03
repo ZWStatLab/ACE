@@ -1,7 +1,3 @@
-# Adapted from: https://github.com/facebookresearch/deepcluster
-# Minor modifications for saving embedding and outputs
-# -------------------------------------------------------------------
-# Original license text:
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #
@@ -103,7 +99,6 @@ def main(args):
             # args.start_epoch = checkpoint['epoch']
             # remove top_layer parameters from checkpoint
             keys = checkpoint['state_dict'].copy()
-            
             for key in keys:
                 if 'top_layer' in key:
                     del checkpoint['state_dict'][key]
@@ -143,7 +138,7 @@ def main(args):
 
     # clustering algorithm to use
     deepcluster = clustering.__dict__[args.clustering](args.nmb_cluster)
-    print("start training")
+
     # training convnet with DeepCluster
     for epoch in range(args.start_epoch, args.epochs):
         end = time.time()
@@ -154,12 +149,11 @@ def main(args):
 
         # get the features for the whole dataset
         features, labels = compute_features(dataloader, model, len(dataset))
-        #print('++++++', features)
+
         # cluster the features
         if args.verbose:
             print('Cluster the features')
         clustering_loss, pro_features = deepcluster.cluster(features, verbose=args.verbose)
-        np.savez('npfiles_val/output_{}.npz'.format(epoch), features=features,labels=labels, pro_features=pro_features)
  
         # assign pseudo-labels
         if args.verbose:
@@ -205,11 +199,8 @@ def main(args):
                     clustering.arrange_clustering(cluster_log.data[-1])
                 )
                 estimates = clustering.arrange_clustering(deepcluster.images_lists)
-                print('NMI against previous assignment: {0:.3f}'.format(nmi))
-                nmi2 = normalized_mutual_info_score(labels, estimates)
-                print('NMI against truths: {0:.3f}'.format(nmi2))
-                np.savez('npfiles_val/output_{}.npz'.format(epoch), features=features, estimates=estimates, labels=labels, pro_features=pro_features)
                 np.savez('npfiles_val/pro_output_{}.npz'.format(epoch), estimates=estimates, labels=labels, pro_features=pro_features)
+                print('NMI against previous assignment: {0:.3f}'.format(nmi))
  
             except IndexError:
                 pass
@@ -219,7 +210,7 @@ def main(args):
                     'arch': args.arch,
                     'state_dict': model.state_dict(),
                     'optimizer' : optimizer.state_dict()},
-                   os.path.join(args.exp, 'checkpoint_epoch_{}.pth.tar'.format(epoch)))
+                   os.path.join(args.exp, 'checkpoint.pth.tar'))
 
         # save cluster assignments
         cluster_log.log(deepcluster.images_lists)
@@ -279,11 +270,7 @@ def train(loader, model, crit, opt, epoch):
         output = model(input_var)
         loss = crit(output, target_var)
 
-        #print('output',output)
-        #print('target_var',target_var)
-        #print('loss',loss)
         # record loss
-        #losses.update(loss.data[0], input_tensor.size(0))
         losses.update(loss.data, input_tensor.size(0))
 
 
@@ -317,11 +304,9 @@ def compute_features(dataloader, model, N):
     labels = []
     # discard the label information in the dataloader
     for i, (input_tensor, label) in enumerate(dataloader):
-        #print("compute ", i, " in ", len(dataloader))
-        #print('input tensor is ', input_tensor.size())
         input_var = torch.autograd.Variable(input_tensor.cuda(), volatile=True)
         aux = model(input_var).data.cpu().numpy()
-        #print('=== aux is', aux)#, aux0, aux1, aux.shape)
+
         if i == 0:
             features = np.zeros((N, aux.shape[1]), dtype='float32')
 

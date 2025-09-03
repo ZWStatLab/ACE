@@ -7,8 +7,9 @@ WD=-5
 K=1000
 WORKERS=8
 EXP="~/exp_val"
+EPOCHS=100
 
 mkdir -p ${EXP}
 
 python main.py ${DIR} --exp ${EXP} --arch ${ARCH} \
-  --lr ${LR} --wd ${WD} --k ${K} --sobel --verbose --workers ${WORKERS}
+  --lr ${LR} --wd ${WD} --k ${K} --sobel --verbose --workers ${WORKERS} --epochs ${EPOCHS}
