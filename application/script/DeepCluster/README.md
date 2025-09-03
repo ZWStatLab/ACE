@@ -43,7 +43,7 @@ This folder explains how to adapt the DeepCluster (https://github.com/facebookre
    np.savez('npfiles_val/pro_output_{}.npz'.format(epoch), estimates=estimates, labels=labels, pro_features=pro_features)
    ```
 
-   - modify the code between Line 300 and 322 to get the true label
+   - modify the code between Line 300 and Line 322 to get the true label
 
    ```python
    labels = []
