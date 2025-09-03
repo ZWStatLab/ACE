@@ -8,7 +8,6 @@ The folder provides how to adapt the training script JULE (https://github.com/jw
 2. In file `train.lua`, change the following lines, and save the modified file as `train_hyper.lua`:
    - add the code block between Line 496 and Line 497
    <pre>
-   ```lua
    labelname = "label"..opt.dataset..opt.learningRate..opt.eta..".h5"
    featurename = "feature"..opt.dataset..opt.learningRate..opt.eta..".h5"
    local labelFile = hdf5.open(labelname, 'w')
@@ -21,7 +20,6 @@ The folder provides how to adapt the training script JULE (https://github.com/jw
    torch.save(modelFile, network_table[1])
    file = io.open("done.o", "w")
    io.close(file)
-   ```
    </pre>
 
 3. Use the script `run_hyper.py` to run JULE train.
@@ -34,14 +32,11 @@ The folder provides how to adapt the training script JULE (https://github.com/jw
 2. In file `train.lua`, change the following lines, and save the modified file as `train_num.lua`:
    - add the option `cmd:option('-numcl', 10, ' the number of clusters')`; and change Line 163 to:
    <pre>
-   ```lua
    target_nclusters_table[i] = opt.numcl
-   ```
    </pre>
 
    - add the code block between Line 496 and Line 497
    <pre>
-   ```lua
       labelname = "label"..opt.dataset..opt.numcl..".h5"
       featurename = "feature"..opt.dataset..opt.numcl..".h5"
       local labelFile = hdf5.open(labelname, 'w')
@@ -52,7 +47,6 @@ The folder provides how to adapt the training script JULE (https://github.com/jw
       featureFile:close()
       file = io.open("done.o", "w")
       io.close(file)
-   ```
    </pre>
 
 3. Use the script `run_num.py` to run JULE train.
