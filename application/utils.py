@@ -242,7 +242,7 @@ def communities_position(graph, partition, **kwargs):
     '''
     get the layout for plotting the graph
     '''
-    communities = set(partition.values())
+    communities = set(list(partition.values()))
     hypergraph = nx.DiGraph()
     hypergraph.add_nodes_from(communities)
     btw_community_edges = find_btw_edges(graph, partition)
