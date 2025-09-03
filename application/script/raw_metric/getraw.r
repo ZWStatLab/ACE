@@ -126,28 +126,6 @@ Cindex<-function(d,cl) {
 }
 
 
-# db
-#Indice.DB(x=jeu, cl=cl1, d = NULL, centrotypes = "centroids", p = 2, q = 2)$DB 
-DB1<-function(x,cl) {
-  result <- tryCatch({
-    Indice.DB(x=x, cl=cl, d = NULL, centrotypes = "centroids", p = 2, q = 2)$DB 
-  }, error = function(e) {
-    cat("Error:", conditionMessage(e), "\n")
-    return(NA)
-  })
-  return(result)
-}
-DB<-function(x,cl) {
-  result <- tryCatch({
-    withTimeout({DB1(x,cl)}, timeout = 600)
-  }, error = function(e) {
-    cat("Error:", conditionMessage(e), "\n")
-    return(NA)
-  })
-  return(result)
-}
-
-
 
 file = paste0(task,'/raw_tmp/key_',key, '.npz')
 data = np$load(file)
