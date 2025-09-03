@@ -5,15 +5,15 @@ This folder explains how to adapt the DEPICT (https://github.com/herandy/DEPICT)
 1. Clone the original JULE repo:
    git clone https://github.com/herandy/DEPICT
 2. In file `functions.py`, change the following lines:
-   - insert the code block between after 717
+   - insert the following after Line 717
    ```python
    feature_prediction = lasagne.layers.get_output(encoder, input_var, deterministic=True)
    ```
-   - insert the code block between after 744
+   - insert the following after Line 744
    ```python
    feature_prediction_fn = theano.function([input_var], feature_prediction)
    ```   
-   - change the code between Line 889 and Line 894 to:
+   - change Lines 889-894 to:
    ```python
     y_pred = np.zeros(X.shape[0])
     y_features = []
@@ -32,14 +32,14 @@ This folder explains how to adapt the DEPICT (https://github.com/herandy/DEPICT)
    ```   
 
 
-3. Modify `DEPICT.py` and save it as `DEPICT_hyper`:
-   - add type constraint `type=float` to the arguments `reconstruct_hyperparam` and `cluster_hyperparam`
+3. Modify `DEPICT.py` and save as `DEPICT_hyper.py`:
+   - add type constraints `type=float` to the arguments `reconstruct_hyperparam` and `cluster_hyperparam`
       ```python
       parser.add_argument('--reconstruct_hyperparam', type=float, default=1.)
       parser.add_argument('--cluster_hyperparam', type=float, default=1.)
       ```
    - set the default float type with `theano.config.floatX = 'float32'`
-   - add a marker file at the end to signal completion
+   - add a marker file at the end of the script to signal completion
       ```python
       with open('done.o', 'w') as f:
          f.write('done')
@@ -53,15 +53,15 @@ This folder explains how to adapt the DEPICT (https://github.com/herandy/DEPICT)
 1. Clone the original JULE repo:
    git clone https://github.com/herandy/DEPICT
 2. In file `functions.py`, change the following lines:
-   - insert the code block between after 717
+   - insert the following after Line 717
    ```python
    feature_prediction = lasagne.layers.get_output(encoder, input_var, deterministic=True)
    ```
-   - insert the code block between after 744
+   - insert the following after Line 744
    ```python
    feature_prediction_fn = theano.function([input_var], feature_prediction)
    ```   
-   - change the code between Line 889 and Line 894 to:
+   - change Lines 889-894 to:
    ```python
     y_pred = np.zeros(X.shape[0])
     y_features = []
@@ -80,14 +80,14 @@ This folder explains how to adapt the DEPICT (https://github.com/herandy/DEPICT)
    ```   
 
 
-3. Modify `DEPICT.py` and save it as `DEPICT_num`:
-   - add the arguments `parser.add_argument('--num_clusters', default=10` 
+3. Modify `DEPICT.py` and save as `DEPICT_num.py`:
+   - add the argument `parser.add_argument('--num_clusters', default=10)` 
    - change Line 78 to:
       ```python
       num_clusters = int(args.num_clusters)
       ```
    - set the default float type with `theano.config.floatX = 'float32'`
-   - add a marker file at the end to signal completion
+   - add a marker file at the end of the script to signal completion
       ```python
       with open('done.o', 'w') as f:
          f.write('done')
