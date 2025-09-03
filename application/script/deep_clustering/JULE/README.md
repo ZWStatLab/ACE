@@ -55,4 +55,4 @@ The folder provides how to adapt the training script JULE (https://github.com/jw
    ```
    </pre>
 
-3. Use the script `run_hyper.py` to run JULE train.
+3. Use the script `run_num.py` to run JULE train.
