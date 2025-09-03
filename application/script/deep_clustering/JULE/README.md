@@ -33,15 +33,15 @@ This folder explains how to adapt the JULE (https://github.com/jwyang/JULE.torch
    ```
    - add the code block between Line 496 and Line 497
    ```lua
-      labelname = "label"..opt.dataset..opt.numcl..".h5"
-      featurename = "feature"..opt.dataset..opt.numcl..".h5"
-      local labelFile = hdf5.open(labelname, 'w')
-      labelFile:write('label', label_pre_tensor_table[1]:long())
-      labelFile:close()
-      local featureFile = hdf5.open(featurename, 'w')
-      featureFile:write('feature', features:float())
-      featureFile:close()
-      file = io.open("done.o", "w")
+   labelname = "label"..opt.dataset..opt.numcl..".h5"
+   featurename = "feature"..opt.dataset..opt.numcl..".h5"
+   local labelFile = hdf5.open(labelname, 'w')
+   labelFile:write('label', label_pre_tensor_table[1]:long())
+   labelFile:close()
+   local featureFile = hdf5.open(featurename, 'w')
+   featureFile:write('feature', features:float())
+   featureFile:close()
+   file = io.open("done.o", "w")
       io.close(file)
    ```
 3. Use the script `run_num.py` to run JULE training jobs.
