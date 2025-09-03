@@ -2,7 +2,7 @@
 This folder explains how to adapt the DeepCluster (https://github.com/facebookresearch/deepcluster) training script to generate the deep clustering results used in our experiments.
 
 1. Clone the original DeepCluster repo:
-   git clone https://github.com/facebookresearch/deepcluster
+   `git clone https://github.com/facebookresearch/deepcluster`
 2. In the file `clustering.py`, change the following lines:
    - change Line 179 to:
    ```python

@@ -3,7 +3,7 @@ This folder explains how to adapt the DEPICT (https://github.com/herandy/DEPICT)
 
 ## Hyperparameter tuning
 1. Clone the original JULE repo:
-   git clone https://github.com/herandy/DEPICT
+   `git clone https://github.com/herandy/DEPICT`
 2. In the file `functions.py`, change the following lines:
    - insert the following after Line 717
    ```python

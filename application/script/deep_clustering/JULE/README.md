@@ -2,7 +2,7 @@
 This folder explains how to adapt the JULE (https://github.com/jwyang/JULE.torch) training script to generate the deep clustering results used in our experiments.
 ## Hyperparameter tuning
 1. Clone the original JULE repo:
-   git clone https://github.com/jwyang/JULE.torch
+   `git clone https://github.com/jwyang/JULE.torch`
 2. In file `train.lua`, change the following lines, and save the modified file as `train_hyper.lua`:
    - add the code block between Line 496 and Line 497
    ```lua
