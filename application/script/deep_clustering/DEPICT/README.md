@@ -4,7 +4,7 @@ This folder explains how to adapt the DEPICT (https://github.com/herandy/DEPICT)
 ## Hyperparameter tuning
 1. Clone the original JULE repo:
    git clone https://github.com/herandy/DEPICT
-2. In file `functions.py`, change the following lines:
+2. In the file `functions.py`, change the following lines:
    - insert the following after Line 717
    ```python
    feature_prediction = lasagne.layers.get_output(encoder, input_var, deterministic=True)
@@ -52,7 +52,7 @@ This folder explains how to adapt the DEPICT (https://github.com/herandy/DEPICT)
 ## Determining the number of clusters
 1. Clone the original JULE repo:
    git clone https://github.com/herandy/DEPICT
-2. In file `functions.py`, change the following lines:
+2. In the file `functions.py`, change the following lines:
    - insert the following after Line 717
    ```python
    feature_prediction = lasagne.layers.get_output(encoder, input_var, deterministic=True)
