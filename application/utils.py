@@ -17,14 +17,14 @@ def clustering_accuracy(gtlabels, labels):
     '''
     return clustering accuracy
     '''
-    cost_matrix = []
+    cnt_matrix = []
     categories = np.unique(gtlabels)
     nr = np.amax(labels) + 1
     for i in np.arange(len(categories)):
-      cost_matrix.append(np.bincount(labels[gtlabels == categories[i]], minlength=nr))
-    cost_matrix = np.asarray(cost_matrix).T
-    row_ind, col_ind = linear_sum_assignment(np.max(cost_matrix) - cost_matrix)
-    return float(cost_matrix[row_ind, col_ind].sum()) / len(gtlabels)
+      cnt_matrix.append(np.bincount(labels[gtlabels == categories[i]], minlength=nr))
+    cnt_matrix = np.asarray(cnt_matrix).T
+    row_ind, col_ind = linear_sum_assignment(np.max(cnt_matrix) - cnt_matrix)
+    return float(cnt_matrix[row_ind, col_ind].sum()) / len(gtlabels)
 
 def plot_tsne(X, y, title):
     '''
@@ -55,7 +55,7 @@ def similarity(x, y, metric):
 
 def affinity_matrix(scores, metric = 'spearman'):
     '''
-    get the affinity matrix of rank correlation from all the scores for the graph
+    create the affinity matrix of rank correlation based on all values
     scores: is nfeat x nlabel matrix
     metric: spearman or tau
     '''
@@ -124,7 +124,7 @@ def hdbscan_graph(affinity, min_samples=5):
 
 def page_rank(affinity):
     '''
-    get rates based on page rank
+    get ratings based on page rank
     '''
     n = len(affinity)
     try:
@@ -141,7 +141,7 @@ def page_rank(affinity):
 
 def hits(affinity):
     '''
-    get rates based on HITS algorithm
+    get ratings based on HITS algorithm
     '''
     n = len(affinity)
     try:
@@ -161,27 +161,27 @@ def hits(affinity):
 
 def rank(affinity, method='pr'):
     '''
-    get rates for all the kept spaces
+    get ratings for all the retained spaces
     '''
     if method=='pr':
         return page_rank(affinity)
     else:
         return hits(affinity)
 
-def get_files_with_substring_and_suffix(directory, substring, suffix):
+def get_files_with_substr_suffix(dirpath, substr, suffix):
     '''
-    get files with certain substring and suffix
+    get files with given substring and suffix
     '''
-    all_files = os.listdir(directory)
-    files = [file for file in all_files if substring in file and file.endswith(suffix)]
+    all_files = os.listdir(dirpath)
+    files = [file for file in all_files if substr in file and file.endswith(suffix)]
     return files
 
 def collect_score_files(eval_data, metric='cosine', root='metric_result'):
     '''
-    collect all scores from the score file
+    collect all scores from files
     '''
     suffix = '{}_score.pkl'.format(metric)
-    result_file = get_files_with_substring_and_suffix(root, '_'+eval_data, suffix)
+    result_file = get_files_with_substr_suffix(root, '_'+eval_data, suffix)
     if len(result_file) > 1:
         print('multiple metrics files', result_file)
     result_file = os.path.join(root, result_file[0])
@@ -190,7 +190,7 @@ def collect_score_files(eval_data, metric='cosine', root='metric_result'):
 
 def collect_raw_files(eval_data, root='raw_metric'):
     '''
-    collect all raw scores from the score file
+    collect raw scores from files
     '''
     result_file = os.path.join(root, 'merge_all_{}_score.pkl'.format(eval_data))
     scores = pk.load(open(result_file, 'rb'))
@@ -198,7 +198,7 @@ def collect_raw_files(eval_data, root='raw_metric'):
 
 def sort_and_match(obj, modelFiles):
     '''
-    sort the obj
+    sort the object based on the key
     '''
     new_obj = {key: value for key, value in obj.items() if key in modelFiles}
     new_obj = dict(sorted(new_obj.items(), key=lambda item: item[0]))
@@ -221,81 +221,81 @@ def process_raw(raw):
 
 def filter_out(pvalues, models, method='holm',alpha=0.1):
     '''
-    filter out spaces based on the p-values from the dip test
+    retain spaces based on the p-values from the dip test
     '''
     r, _, _, _ = multipletests(pvalues, method=method, alpha=alpha)
     keep_models = [m for i, m in enumerate(models) if r[i]]
     return keep_models
 
-def community_layout(g, partition):
+def com_layout(graph, partition):
     '''
     get the layout for plotting the graph
     '''
-    pos_communities = communities_position(g, partition, scale=3.)
-    pos_nodes = nodes_position(g, partition, scale=1.)
-    pos = dict()
-    for node in g.nodes():
-        pos[node] = pos_communities[node] + pos_nodes[node]
+    pos = {}
+    pos_com = communities_position(graph, partition, scale=3.)
+    pos_nodes = nodes_position(graph, partition, scale=1.)
+    for node in graph.nodes():
+        pos[node] = pos_com[node] + pos_nodes[node]
     return pos
 
-def communities_position(g, partition, **kwargs):
+def communities_position(graph, partition, **kwargs):
     '''
     get the layout for plotting the graph
     '''
-    between_community_edges = find_between_community_edges(g, partition)
     communities = set(partition.values())
     hypergraph = nx.DiGraph()
     hypergraph.add_nodes_from(communities)
-    for (ci, cj), edges in between_community_edges.items():
+    btw_community_edges = find_btw_edges(graph, partition)
+    for (ci, cj), edges in btw_community_edges.items():
         hypergraph.add_edge(ci, cj, weight=len(edges))
     pos_communities = nx.spring_layout(hypergraph, **kwargs)
-    pos = dict()
+    pos = {}
     for node, community in partition.items():
         pos[node] = pos_communities[community]
     return pos
 
-def find_between_community_edges(g, partition):
+def find_btw_edges(graph, partition):
     '''
     get the layout for plotting the graph
     '''
-    edges = dict()
-    for (ni, nj) in g.edges():
-        ci = partition[ni]
-        cj = partition[nj]
+    edges = {}
+    for (ei, ej) in graph.edges():
+        ci = partition[ei]
+        cj = partition[ej]
         if ci != cj:
             try:
-                edges[(ci, cj)] += [(ni, nj)]
-            except KeyError:
-                edges[(ci, cj)] = [(ni, nj)]
+                edges[(ci, cj)] += [(ei, ej)]
+            except:
+                edges[(ci, cj)] = [(ei, ej)]
     return edges
 
-def nodes_position(g, partition, **kwargs):
+def nodes_position(graph, partition, **kwargs):
     '''
     get the layout for plotting the graph
     '''
-    communities = dict()
-    for node, community in partition.items():
+    communities = {}
+    for node, com in partition.items():
         try:
-            communities[community] += [node]
-        except KeyError:
-            communities[community] = [node]
-    pos = dict()
+            communities[com] += [node]
+        except:
+            communities[com] = [node]
+    pos = {}
     for ci, nodes in communities.items():
-        subgraph = g.subgraph(nodes)
+        subgraph = graph.subgraph(nodes)
         pos_subgraph = nx.spring_layout(subgraph, **kwargs)
         pos.update(pos_subgraph)
     return pos
 
 def kendalltau(score1, score2):
     '''
-    calculate kendal tau
+    calculate kendal tau rank correlation
     '''
     stat, pval = stats.kendalltau(score1, score2)
     return np.round(stat, 3), pval
 
 def spearmanr(score1, score2):
     '''
-    calculate spearman correlation
+    calculate spearman rank correlation
     '''
     stat, pval = stats.spearmanr(score1, score2)
     return np.round(stat, 3), pval
@@ -311,7 +311,7 @@ def get_max(score):
 
 def max_number(score, models, eval_data):
     '''
-    get the index of the max score
+    get the name of the max score
     '''
     imax = get_max(score)
     if imax == None:
@@ -332,20 +332,17 @@ def max_number(score, models, eval_data):
 
 def collect_all_scores(all_scores, modelFiles):
     '''
-    collect scores from all the possible pairs of partition result and embedded data
-    also return the paired score
+    1. collect scores for all possible pairs of partition results and embedded data
+    2. return the paired score
     '''
     scores = []
     diag_score = {}
     for m in modelFiles:
         scores_row = []
         for n in modelFiles:
-            if n not in all_scores[m].keys():
-                s = 0
-            else:
-                s = all_scores[m][n]
-                if isinstance(s, np.ndarray):
-                    s = s.item()
+            s = all_scores[m][n]
+            if isinstance(s, np.ndarray):
+                s = s.item()
             if s == None:
                 s = np.nan
             scores_row.append(s)
@@ -356,7 +353,7 @@ def collect_all_scores(all_scores, modelFiles):
 
 def eval_pool(modelFiles, scores):
     '''
-    get pool score
+    get pooled score
     '''
     label_score = {}
     for i, m in enumerate(modelFiles):
@@ -366,7 +363,7 @@ def eval_pool(modelFiles, scores):
 
 def eval_ace(modelFiles, scores, spaceFiles, eps=0.05, alpha=0.01, cl_method='dbscan', rank_method='pr', remove_outlier=True):
     '''
-    implementation of ACE to get ACE scores
+    generate ACE scores
     Input:
     modelFiles: list of files names for results (M)
     scores: numpy array of L x M with rows corresponding to L spaces and columns corresponding to M results
@@ -376,7 +373,7 @@ def eval_ace(modelFiles, scores, spaceFiles, eps=0.05, alpha=0.01, cl_method='db
     rows_to_remove = np.all(scores[:, 1:] == scores[:, :-1], axis=1)
     spaceFiles = spaceFiles[~rows_to_remove]
     scores = scores[~rows_to_remove]
-    # get the affinity matrix based on rank correlation from the score array
+    # generate the affinity matrix based on rank correlation from the score array
     affinity, pvals, index = affinity_matrix(scores)
     # phase 1 clustering
     if cl_method == 'dbscan':
@@ -400,7 +397,7 @@ def eval_ace(modelFiles, scores, spaceFiles, eps=0.05, alpha=0.01, cl_method='db
                 dist = metrics.pairwise_distances(sc, metric='euclidean').astype('double')
                 outliers_d, labels_d = hdbscan_graph(1-dist, min_samples=2)
                 out_idx = 1 # for outlier spaces we consider them as singleton subgroups
-                # create index for the subgroups to make all the subgroup indices are non-overlapping
+                # create index for the subgroups to make all the subgroup indices non-overlapping
                 for l, lb in enumerate(labels_d):
                     if lb == -1:
                         labels_updated[part[l]] = (n+1)*100000 + out_idx
@@ -433,7 +430,7 @@ def eval_ace(modelFiles, scores, spaceFiles, eps=0.05, alpha=0.01, cl_method='db
     npart = np.unique(labels_updated[labels_updated >= 0])
     if len(npart) > 0:
         result, nparts, prvs, nparts_id = {}, {}, {}, {}
-        # for each subgroup, use link analysis to get rates of spaces in the subgroup
+        # for each subgroup, use link analysis to get ratings of spaces in the subgroup
         for n in npart:
             part = np.where(labels_updated == n)[0]
             solve_score = {}
@@ -500,14 +497,14 @@ def label_map_color(labels):
 
 def graph_plot(l, graph, dlabels, save_path, eval_data, metric):
     '''
-    make the plot for the graph of all the spaces
+    make the plot for the graph of spaces
     '''
     values = label_map_color(list(dlabels.values()))
     plt.figure(l)
     partitions = {}
     for i, v in enumerate(list(dlabels.values())):
         partitions[i] = v
-    nx.draw(graph, pos=community_layout(graph, partitions), node_color=values, with_labels=True)
+    nx.draw(graph, pos=com_layout(graph, partitions), node_color=values, with_labels=True)
     plt.savefig(os.path.join(save_path, "{}_{}.png".format(eval_data, metric)))
     l = l+1
     return l

@@ -1,3 +1,6 @@
+## Adapted from: https://github.com/herandy/DEPICT
+## Minor modifications for saving embedding and outputs
+
 import os
 
 

@@ -13,14 +13,14 @@ def clustering_accuracy(gtlabels, labels):
     #print(gtlabels, labels)
     gtlabels = np.array(gtlabels, dtype='int64')
     labels = np.array(labels, dtype='int64')
-    cost_matrix = []
+    cnt_matrix = []
     categories = np.unique(gtlabels)
     nr = np.amax(labels) + 1
     for i in np.arange(len(categories)):
-      cost_matrix.append(np.bincount(labels[gtlabels == categories[i]], minlength=nr))
-    cost_matrix = np.asarray(cost_matrix).T
-    row_ind, col_ind = linear_sum_assignment(np.max(cost_matrix) - cost_matrix)
-    return float(cost_matrix[row_ind, col_ind].sum()) / len(gtlabels)
+      cnt_matrix.append(np.bincount(labels[gtlabels == categories[i]], minlength=nr))
+    cnt_matrix = np.asarray(cnt_matrix).T
+    row_ind, col_ind = linear_sum_assignment(np.max(cnt_matrix) - cnt_matrix)
+    return float(cnt_matrix[row_ind, col_ind].sum()) / len(gtlabels)
 
 
 def calinski_harabasz_score(x,y):

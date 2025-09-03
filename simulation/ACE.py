@@ -49,7 +49,7 @@ if __name__ == '__main__':
             for eval_data in range(nrep):
                 l = l + 1
                 root_seed_path = os.path.join(root_path, str(eval_data))
-                modelFiles = get_files_with_substring_and_suffix(root_seed_path, 'output', 'npz')
+                modelFiles = get_files_with_substr_suffix(root_seed_path, 'output', 'npz')
                 modelFiles = sorted(modelFiles)
                 # first load nmi and acc results (used as truth for evaluation)
                 tpath = os.path.join(root_seed_path, 'true.pkl')

@@ -15,7 +15,6 @@ datasets_all = {
     'DEPICT_num': datasets_depict,
 }
 
-# change this line to move from step 1 to step 2
 step = 1 #step = 2
 
 # step one
@@ -49,10 +48,7 @@ if step == 1:
                 outf.write('conda activate dcl\n')
                 outf.write('python3 get_raw.py --dataset {} --metric {} --task {} \n'.format(dataset, metric, task))
                 outf.close()
-                #if dataset in ['COIL-20', 'UMist']:
                 ofile = os.path.join(task,'raw_metric', 'merge_{}_{}_score.pkl'.format(dataset, metric))
-                #print(ofile)
-                #if not os.path.isfile(ofile):
                 subff.write('os.system("sbatch %s")\n' % jobName)
     subff.close()
 elif step == 2:

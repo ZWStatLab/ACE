@@ -83,7 +83,7 @@ for task in tasks:
                 width=width, color=strategy_colors[strategy], edgecolor='k', hatch=strategy_hatchs[strategy], zorder=2))
 
             if (n == 1) or (n == 2):
-                xticks_truth+=np.array(xticks)/2 # get the middle of the two ticks
+                xticks_truth+=np.array(xticks)/2 
 
         xticks_truth = xticks_truth.tolist()
 
@@ -124,7 +124,6 @@ for task in tasks:
 
         ax.yaxis.set_ticks(cticks)
         ax.set_ylim(ymin, ymax+5)
-        # # set the grid lines to dotted
         ax.grid(True,alpha=0.7, zorder=1)
         gridlines = ax.get_ygridlines() + ax.get_xgridlines()
         for line in gridlines:

@@ -1,3 +1,7 @@
+## Adapted from: https://github.com/herandy/DEPICT
+## Minor modifications for saving embedding and outputs
+
+
 from __future__ import print_function
 
 import sys

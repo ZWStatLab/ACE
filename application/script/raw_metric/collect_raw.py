@@ -11,18 +11,7 @@ import math
 
 if __name__ == '__main__':
 
-    parser = argparse.ArgumentParser()
-    #parser.add_argument('--dataset', default='USPS')
-    #parser.add_argument('--metric', default='euclidean')
-
-    args = parser.parse_args()
-    #eval_data = args.dataset
-
-
-
     datasets_jule = ['USPS', 'UMist', 'COIL-20', 'COIL-100', 'YTF', 'FRGC', 'MNIST-test', 'CMU-PIE']
-    #datasets_jule = ['USPS',  'COIL-20',  'YTF', 'FRGC', 'MNIST-test', 'CMU-PIE']
-
     datasets_depict = ['USPS', 'YTF', 'FRGC', 'MNIST-test', 'CMU-PIE']
     datasets_all = {
         'JULE_hyper': datasets_jule ,
@@ -59,33 +48,11 @@ if __name__ == '__main__':
                         if math.isinf(value):
                             print('cv',value)
                             value = np.nan
-                        
                         scored[metric][key] = value 
-            else:
-                file = "{}/raw_metric/r_{}.npz".format(task, eval_data)
-                data = np.load(file,allow_pickle=True)
-                #print(task,eval_data,list(data.keys()))
-                models = data['models'][1:]
-                for metric in metric_list:
-                    if not metric in data.keys():
-                        value = None
-                    else:
-                        if metric != 'ccdbw':
-                            value = data['r{}'.format(metric)].tolist()
-                        else:
-                            value = data['r{}'.format('cdbw')].tolist()
-                    if value == None:
-                        #print('---')
-                        value = [0 for _ in range(len(models))]
-                    if metric in ['cind', 'db', 'sdbw']:
-                        value = [- v for v in value]
-                    rv = dict(zip(models, value))
-                    scored[metric] = rv
 
 
             for metric in ['dav', 'ch', 'euclidean', 'cosine']:
                 with open('{}/raw_metric/merge_{}_{}_score.pkl'.format(task, eval_data, metric), 'rb') as file:
-                    #pk.dump(scored[metric], file)
                     scored2 = pk.load(file)
                 for key, value in scored2.items():
                     print(len(value))

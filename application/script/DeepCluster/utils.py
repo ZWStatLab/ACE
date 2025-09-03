@@ -13,34 +13,19 @@ import pickle as pk
 import matplotlib.pyplot as plt
 import h5py
 
+
 def clustering_accuracy(gtlabels, labels):
     '''
     return clustering accuracy
     '''
-    cost_matrix = []
+    cnt_matrix = []
     categories = np.unique(gtlabels)
     nr = np.amax(labels) + 1
     for i in np.arange(len(categories)):
-      cost_matrix.append(np.bincount(labels[gtlabels == categories[i]], minlength=nr))
-    cost_matrix = np.asarray(cost_matrix).T
-    row_ind, col_ind = linear_sum_assignment(np.max(cost_matrix) - cost_matrix)
-    return float(cost_matrix[row_ind, col_ind].sum()) / len(gtlabels)
-
-def plot_tsne(X, y, title):
-    '''
-    make tsne plot
-    '''
-    tsne = TSNE(n_components=2, random_state=42)
-    X_tsne = tsne.fit_transform(X)
-    print(tsne.kl_divergence_)
-    fig = px.scatter(x=X_tsne[:, 0], y=X_tsne[:, 1], color=y)# symbol=m, size=s)
-    fig.update_layout(
-        title=title,
-        coloraxis_colorbar_title="Truth",
-        xaxis_title="t-SNE 1",
-        yaxis_title="t-SNE 2"
-    )
-    return fig
+      cnt_matrix.append(np.bincount(labels[gtlabels == categories[i]], minlength=nr))
+    cnt_matrix = np.asarray(cnt_matrix).T
+    row_ind, col_ind = linear_sum_assignment(np.max(cnt_matrix) - cnt_matrix)
+    return float(cnt_matrix[row_ind, col_ind].sum()) / len(gtlabels)
 
 def similarity(x, y, metric):
     '''
@@ -124,7 +109,7 @@ def hdbscan_graph(affinity, min_samples=5):
 
 def page_rank(affinity):
     '''
-    get rates based on page rank
+    get ratings based on page rank
     '''
     n = len(affinity)
     try:
@@ -141,7 +126,7 @@ def page_rank(affinity):
 
 def hits(affinity):
     '''
-    get rates based on HITS algorithm
+    get ratings based on HITS algorithm
     '''
     n = len(affinity)
     try:
@@ -168,33 +153,6 @@ def rank(affinity, method='pr'):
     else:
         return hits(affinity)
 
-def get_files_with_substring_and_suffix(directory, substring, suffix):
-    '''
-    get files with certain substring and suffix
-    '''
-    all_files = os.listdir(directory)
-    files = [file for file in all_files if substring in file and file.endswith(suffix)]
-    return files
-
-def collect_score_files(eval_data, metric='cosine', root='metric_result'):
-    '''
-    collect all scores from the score file
-    '''
-    suffix = '{}_score.pkl'.format(metric)
-    result_file = get_files_with_substring_and_suffix(root, '_'+eval_data, suffix)
-    if len(result_file) > 1:
-        print('multiple metrics files', result_file)
-    result_file = os.path.join(root, result_file[0])
-    scores = pk.load(open(result_file, 'rb'))
-    return scores
-
-def collect_raw_files(eval_data, root='raw_metric'):
-    '''
-    collect all raw scores from the score file
-    '''
-    result_file = os.path.join(root, 'merge_all_{}_score.pkl'.format(eval_data))
-    scores = pk.load(open(result_file, 'rb'))
-    return scores
 
 def sort_and_match(obj, modelFiles):
     '''
@@ -206,18 +164,6 @@ def sort_and_match(obj, modelFiles):
     val_obj = np.squeeze(np.array(list(new_obj.values())))
     return new_obj, key_obj, val_obj
 
-def process_raw(raw):
-    '''
-    process raw scores
-    '''
-    raw_output = {}
-    for k, v in raw.items():
-        if isinstance(v, np.ndarray):
-            v = v.item()
-        if v == None:
-            v = np.nan
-        raw_output[k] = v
-    return raw_output
 
 def filter_out(pvalues, models, method='holm',alpha=0.1):
     '''
@@ -226,65 +172,6 @@ def filter_out(pvalues, models, method='holm',alpha=0.1):
     r, _, _, _ = multipletests(pvalues, method=method, alpha=alpha)
     keep_models = [m for i, m in enumerate(models) if r[i]]
     return keep_models
-
-def community_layout(g, partition):
-    '''
-    get the layout for plotting the graph
-    '''
-    pos_communities = communities_position(g, partition, scale=3.)
-    pos_nodes = nodes_position(g, partition, scale=1.)
-    pos = dict()
-    for node in g.nodes():
-        pos[node] = pos_communities[node] + pos_nodes[node]
-    return pos
-
-def communities_position(g, partition, **kwargs):
-    '''
-    get the layout for plotting the graph
-    '''
-    between_community_edges = find_between_community_edges(g, partition)
-    communities = set(partition.values())
-    hypergraph = nx.DiGraph()
-    hypergraph.add_nodes_from(communities)
-    for (ci, cj), edges in between_community_edges.items():
-        hypergraph.add_edge(ci, cj, weight=len(edges))
-    pos_communities = nx.spring_layout(hypergraph, **kwargs)
-    pos = dict()
-    for node, community in partition.items():
-        pos[node] = pos_communities[community]
-    return pos
-
-def find_between_community_edges(g, partition):
-    '''
-    get the layout for plotting the graph
-    '''
-    edges = dict()
-    for (ni, nj) in g.edges():
-        ci = partition[ni]
-        cj = partition[nj]
-        if ci != cj:
-            try:
-                edges[(ci, cj)] += [(ni, nj)]
-            except KeyError:
-                edges[(ci, cj)] = [(ni, nj)]
-    return edges
-
-def nodes_position(g, partition, **kwargs):
-    '''
-    get the layout for plotting the graph
-    '''
-    communities = dict()
-    for node, community in partition.items():
-        try:
-            communities[community] += [node]
-        except KeyError:
-            communities[community] = [node]
-    pos = dict()
-    for ci, nodes in communities.items():
-        subgraph = g.subgraph(nodes)
-        pos_subgraph = nx.spring_layout(subgraph, **kwargs)
-        pos.update(pos_subgraph)
-    return pos
 
 def kendalltau(score1, score2):
     '''
@@ -300,59 +187,7 @@ def spearmanr(score1, score2):
     stat, pval = stats.spearmanr(score1, score2)
     return np.round(stat, 3), pval
 
-def get_max(score):
-    '''
-    get the index of the max score
-    '''
-    if np.max(score) == np.min(score):
-        return None
-    else:
-        return np.where(score == np.max(score))[0].tolist()
 
-def max_number(score, models, eval_data):
-    '''
-    get the index of the max score
-    '''
-    imax = get_max(score)
-    if imax == None:
-        return 'None'
-    else:
-        ms = []
-        for i in imax:
-            m = models[i]
-            m = m.replace(eval_data, "")
-            if '_' in m:
-                m = m.replace("_", "")
-            if '.npz' in m:
-                m = m.replace(".npz", "")
-            if 'output' in m:
-                m = m.replace("output", "")
-            ms.append(m)
-        return ','.join(ms)
-
-def collect_all_scores(all_scores, modelFiles):
-    '''
-    collect scores from all the possible pairs of partition result and embedded data
-    also return the paired score
-    '''
-    scores = []
-    diag_score = {}
-    for m in modelFiles:
-        scores_row = []
-        for n in modelFiles:
-            if n not in all_scores[m].keys():
-                s = 0
-            else:
-                s = all_scores[m][n]
-                if isinstance(s, np.ndarray):
-                    s = s.item()
-            if s == None:
-                s = np.nan
-            scores_row.append(s)
-            if n == m:
-                diag_score[m] = s
-        scores.append(scores_row)
-    return np.array(scores), diag_score
 
 def eval_pool(modelFiles, scores):
     '''
@@ -478,101 +313,7 @@ def eval_ace(modelFiles, scores, spaceFiles, eps=0.05, alpha=0.01, cl_method='db
     else:
         return solve_out_score, graph, outliers, dlabels_updated, best_out, spaceFiles[best_out], dlabels
 
-def label_map_color(labels):
-    '''
-    map color to label in the graph plot
-    '''
-    color_map = {0: 'red', 1: 'blue', 2: 'green', 3: 'yellow', 4: 'orange', 5: 'purple', 6: 'pink',
-                 7: 'brown', 8:'violet', 9:'cyan', 10:'maroon', 11: 'teal', 12: 'indigo',
-                 13: 'tan', 14: 'magenta', 15: 'salmon'}
-    ulabels = np.unique(labels)
-    color_map1 = {}
-    i = 0
-    for _, ul in enumerate(ulabels):
-        if ul >= 100000:
-            color_map1[ul] = 'olive'
-        else:
-            color_map1[ul] = color_map[i]
-            i = i + 1
-    color_map1[-1] = 'grey'
-    values = [color_map1[v] for v in labels]
-    return values
 
-def graph_plot(l, graph, dlabels, save_path, eval_data, metric):
-    '''
-    make the plot for the graph of all the spaces
-    '''
-    values = label_map_color(list(dlabels.values()))
-    plt.figure(l)
-    partitions = {}
-    for i, v in enumerate(list(dlabels.values())):
-        partitions[i] = v
-    nx.draw(graph, pos=community_layout(graph, partitions), node_color=values, with_labels=True)
-    plt.savefig(os.path.join(save_path, "{}_{}.png".format(eval_data, metric)))
-    l = l+1
-    return l
-
-
-
-def make_data_plot(dlabels, selected_group, eval_data, task, metric, save_path):
-    '''
-    make tsne plot
-    '''
-    tasks = {'jule_hyper': './JULE_hyper',
-             'jule_num': './JULE_num',
-             'DEPICT': './DEPICT_hyper',
-             'DEPICTnum': './DEPICT_num'
-             }
-    spaceFiles = np.array(list(dlabels.keys()))
-    labels = np.array(list(dlabels.values()))
-    save_path = os.path.join(save_path, 'tnse')
-    if not os.path.isdir(save_path):
-        os.mkdir(save_path)
-    save_path = os.path.join(save_path, eval_data)
-    if not os.path.isdir(save_path):
-        os.mkdir(save_path)
-    save_path = os.path.join(save_path, metric)
-    if not os.path.isdir(save_path):
-        os.mkdir(save_path)
-    # prepare truth label
-    rpath = tasks[task]
-    if 'jule' in task:
-        rpath = os.path.join(rpath, 'jule') # root path
-    dpath = os.path.join(rpath, 'datasets') # data path
-    dpath = os.path.join(dpath, eval_data)
-    if 'jule' in task:
-        dpath = os.path.join(dpath, 'data4torch.h5')
-    else:
-        dpath = os.path.join(dpath, 'data.h5')
-    y = np.squeeze(np.array(h5py.File(dpath, 'r')['labels']))
-    _, y = np.unique(y, return_inverse=True)
-    labels_unique = np.unique(labels)
-    best_space = None
-    if selected_group not in labels_unique:
-        best_space = spaceFiles[selected_group]
-    # make tsne plot for each space in each group
-    for ul in labels_unique:
-        if ul == selected_group:
-            uu = '{}_selected'.format(ul)
-        else:
-            uu= str(ul)
-        spath = os.path.join(save_path, uu)
-        if not os.path.isdir(spath):
-            os.mkdir(spath)
-        spaces = spaceFiles[labels==ul].tolist()
-        for sp in spaces:
-            if 'jule' in task:
-                fpath = os.path.join(rpath, 'feature{}.h5'.format(sp))
-                X = np.array(h5py.File(fpath, 'r')['feature'])
-            else:
-                fpath = os.path.join(rpath, sp)
-                X=np.array(np.load(fpath)['y_features'])
-            fig = plot_tsne(X, y, eval_data)
-            if (best_space != None) and (best_space == sp):
-                wpath = os.path.join(spath,"{}_selected.png".format(sp))
-            else:
-                wpath = os.path.join(spath,"{}.png".format(sp))
-            fig.write_image(wpath)
 
 if __name__ == '__main__':
     exit()

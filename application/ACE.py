@@ -54,14 +54,16 @@ if __name__ == '__main__':
 
             for eval_data in datasets:
                 l = l + 1
-                # get the list of files from all the evaluation results
+
+                # get the list of files for all the evaluated results
                 with open(os.path.join('file_list', task, "{}.txt".format(eval_data)), "r") as file:
                     modelFiles = [line.strip() for line in file.readlines()]
+
                 # first load nmi and acc results (used as truth for evaluation)
                 tpath = 'true_{}.pkl'.format(eval_data)
                 tpath = os.path.join(root_path, 'external_metric', tpath)
                 truth_nmi, truth_acc = pk.load(open(tpath, 'rb'))
-                # sort the results to have the same order
+                # sort the values to have the same order
                 _, _, nmv = sort_and_match(truth_nmi, modelFiles)
                 _, _, acv = sort_and_match(truth_acc, modelFiles)
 
@@ -80,7 +82,7 @@ if __name__ == '__main__':
                 models = files['models'][1:]
                 pvalues = pvalues[np.isin(models, np.array(modelFiles))]
                 models = models[np.isin(models, np.array(modelFiles))]
-                # filter spaces based on p-values
+                # retain spaces based on p-values
                 keep_models = filter_out(pvalues, models, alpha=args.filter_alpha)
                 if len(keep_models) < 1: # skip dip test if no space retained
                     print(task, eval_data,'continue')
@@ -88,7 +90,7 @@ if __name__ == '__main__':
                 keep_index = np.array([True if m in keep_models else False for m in modelFiles])
                 spaceFiles = np.array([m for m in modelFiles if m in keep_models])
 
-                # collect all the internal measure values given the metric
+                # collect all the internal measures
                 all_scores = collect_score_files(eval_data, metric, root=os.path.join(root_path, 'embedded_metric'))
                 scores, diag_scores = collect_all_scores(all_scores, modelFiles)
                 scores = np.where(np.isinf(scores) & (scores < 0), np.nan, scores)
@@ -100,11 +102,9 @@ if __name__ == '__main__':
                 # get paired scores
                 _, _, pair_score = sort_and_match(diag_scores, modelFiles)
 
-                # eval pooled score
+                # get pooled score
                 pool_score_before =eval_pool(modelFiles, scores) # before dip test
                 _, _, pool_score_before = sort_and_match(pool_score_before, modelFiles)
-
-                # eval pooled score
                 scores = scores[keep_index, :] # after dip tests
                 pool_score =eval_pool(modelFiles, scores)
                 _, _, pool_score = sort_and_match(pool_score, modelFiles)
@@ -114,14 +114,14 @@ if __name__ == '__main__':
                                                                                      args.graph_alpha, args.cl_method, args.rank_method)
                 _, _, ace_score = sort_and_match(ace_score, modelFiles)
 
-                # make the graph of spaces
+                # make the graph
                 l = graph_plot(l, graph, labels, save_path, eval_data, metric)
                 # make the tsne plot
                 if args.tsne:
                     make_data_plot(labels, selected_group, eval_data, task, metric, save_path)
 
 
-                # get the evaluate performance
+                # get the evaluation regarding rank correlation
                 # NMI
                 tau_pool, _ = kendalltau(pool_score, nmv)
                 tau_pool_before, _ = kendalltau(pool_score_before, nmv)
@@ -140,7 +140,7 @@ if __name__ == '__main__':
                 cor_ace_score, _ = spearmanr(ace_score, nmv)
                 cor_pair_score, _ = spearmanr(pair_score, nmv)
                 cor_raw_score, _ = spearmanr(raw_score, nmv)
-                # Acc
+                # ACC
                 cor_pool1, _ = spearmanr(pool_score, acv)
                 cor_pool1_before, _ = spearmanr(pool_score_before, acv)
                 cor_ace_score1, _ = spearmanr(ace_score, acv)
@@ -151,7 +151,7 @@ if __name__ == '__main__':
                 corr = [eval_data, cor_ace_score, cor_pool, cor_pool_before, cor_pair_score, cor_raw_score, cor_ace_score1, cor_pool1, cor_pool1_before, cor_pair_score1, cor_raw_score1]
                 tau_avg += np.array(tau[1:])/len(datasets)
                 corr_avg += np.array(corr[1:])/len(datasets)
-                ##
+                
                 modelFiles = sorted(modelFiles)
                 if 'num' in task:
                     st_argmax = max_number(ace_score, modelFiles, eval_data)

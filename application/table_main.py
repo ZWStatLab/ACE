@@ -1,7 +1,7 @@
+# the script is for generating the tables in  the main paper
 import os,sys
 import pandas as pd
 import math
-# the script is for generating the tables in  the main paper
 import numpy as np
 import pickle as pk
 critd = {'tau': '${}tau_B$'.format(chr(92)), 'cor': '$r_s$'}
@@ -84,7 +84,6 @@ def convert_float(x):
 
 def create_subcol(colnames):
     prefix = [(c.split('=')[1], critd[c.split('=')[0]]) for c in colnames if c != 'dataset']
-    #prefix = sorted(prefix,  key=lambda x: (x[0], prefix.index(x)))
     return prefix
 
 def short_name(df, ext):
@@ -101,13 +100,13 @@ def short_name(df, ext):
 def transpose(df):
     transposed_df = df.T
     transposed_df.columns = transposed_df.iloc[0]
-    # Drop the first row (original column headers)
+    # drop the first row (original column headers)
     transposed_df = transposed_df.drop(transposed_df.index[0])
     return transposed_df
 
 def row_max_indices(row):
-    max_val = row.max()  # Find the max value
-    return row[row == max_val].index.tolist()  # Return all column indices where the value equals the max
+    max_val = row.max()  
+    return row[row == max_val].index.tolist()  # return all column indices where the value equals the max
 
 root_dir = '.'
 
@@ -151,14 +150,9 @@ dcols = {'nmi': ['ACE vs nmi', 'pooled score vs nmi',
        'pooled score vs acc (w/o dip)', 'paired score vs acc',
        'raw score vs acc']}
 
-# exts = ['nmi', 'acc']
-# ext = exts[1] # acc
-# ext = exts[0] # nmi
 
 ext = args.ext
 metrics = ['ch', 'dav', 'cosine', 'euclidean']
-
-#tasks = ['jule_hyper','jule_num','DEPICT','DEPICTnum']
 
 if args.exp == 'hyper':
     tasks = ['JULE_hyper','DEPICT_hyper']

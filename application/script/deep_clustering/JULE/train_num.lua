@@ -1,3 +1,8 @@
+--  Adapted from: https://github.com/jwyang/JULE.torch
+--  Minor modifications for allowing different number of clusters and saving embedding and outputs
+--  Original license: MIT License 
+---------------------------------------------------------------------
+--  Original header:
 ----------------------------------------------------------------------------
 -- This is the torch version for our CVPR 2016 paper: ----------------------
 -- Joint Unsupervised Learning of Deep Representations and Image Clusters --

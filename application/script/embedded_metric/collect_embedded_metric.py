@@ -10,16 +10,6 @@ import math
 
 
 if __name__ == '__main__':
-
-    parser = argparse.ArgumentParser()
-    #parser.add_argument('--dataset', default='USPS')
-    #parser.add_argument('--metric', default='euclidean')
-
-    args = parser.parse_args()
-    #eval_data = args.dataset
-
-
-
     datasets_jule = ['USPS', 'UMist', 'COIL-20', 'COIL-100', 'YTF', 'FRGC', 'MNIST-test', 'CMU-PIE']
     datasets_depict = ['USPS', 'YTF', 'FRGC', 'MNIST-test', 'CMU-PIE']
     datasets_all = {
@@ -52,6 +42,7 @@ if __name__ == '__main__':
                     data = np.load(file)
                     for metric in metric_list:
                         value = data[metric]
+                        # convert invalid values from R function output to NaN
                         if value == True:
                             print('cv',value)
                             value = np.nan

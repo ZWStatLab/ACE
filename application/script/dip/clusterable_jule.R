@@ -2,8 +2,6 @@ library(clusterability)
 library(rhdf5)
 library(reticulate)
 
-# model1 = 'UUMist0.0010.9'
-# model1 = 'UUMist0.050.2'
 np <- import("numpy")
 args = as.character(commandArgs(trailingOnly = T))
 nargs = length(args)

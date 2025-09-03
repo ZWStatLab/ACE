@@ -9,25 +9,25 @@ from numpy import linalg as LA
 from scipy.optimize import linear_sum_assignment
 from sklearn.metrics.cluster import normalized_mutual_info_score
 
-def get_files_with_substring_and_suffix(directory, substring, suffix):
+def get_files_with_substr_suffix(dirpath, substr, suffix):
     '''
-    get files with certain substring and suffix
+    get files with given substring and suffix
     '''
-    all_files = os.listdir(directory)
-    files = [file for file in all_files if substring in file and file.endswith(suffix)]
+    all_files = os.listdir(dirpath)
+    files = [file for file in all_files if substr in file and file.endswith(suffix)]
     return files
 
 def clustering_accuracy(gtlabels, labels):
     gtlabels = np.array(gtlabels, dtype='int64')
     labels = np.array(labels, dtype='int64')
-    cost_matrix = []
+    cnt_matrix = []
     categories = np.unique(gtlabels)
     nr = np.amax(labels) + 1
     for i in np.arange(len(categories)):
-      cost_matrix.append(np.bincount(labels[gtlabels == categories[i]], minlength=nr))
-    cost_matrix = np.asarray(cost_matrix).T
-    row_ind, col_ind = linear_sum_assignment(np.max(cost_matrix) - cost_matrix)
-    return float(cost_matrix[row_ind, col_ind].sum()) / len(gtlabels)
+      cnt_matrix.append(np.bincount(labels[gtlabels == categories[i]], minlength=nr))
+    cnt_matrix = np.asarray(cnt_matrix).T
+    row_ind, col_ind = linear_sum_assignment(np.max(cnt_matrix) - cnt_matrix)
+    return float(cnt_matrix[row_ind, col_ind].sum()) / len(gtlabels)
 
 def calinski_harabasz_score(x,y):
     if len(np.unique(y)) > 1:
@@ -94,7 +94,7 @@ if __name__ == '__main__':
     labels={}
     truths={}
     scored = defaultdict(dict)
-    modelFiles = get_files_with_substring_and_suffix(modelpath, 'output', 'npz')
+    modelFiles = get_files_with_substr_suffix(modelpath, 'output', 'npz')
 
     for m in modelFiles:
         files = np.load(os.path.join(modelpath,m))

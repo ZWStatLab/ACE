@@ -1,3 +1,7 @@
+# Adapted from: https://github.com/facebookresearch/deepcluster
+# Minor modifications for saving embedding and outputs
+# -------------------------------------------------------------------
+# Original license text:
 # Copyright (c) 2017-present, Facebook, Inc.
 # All rights reserved.
 #

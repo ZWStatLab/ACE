@@ -8,7 +8,6 @@ critd = {'tau': '${}tau_B$'.format(chr(92)), 'cor': '$r_s$'}
 def transpose(df):
     transposed_df = df.T
     transposed_df.columns = transposed_df.iloc[0]
-    # Drop the first row (original column headers)
     transposed_df = transposed_df.drop(transposed_df.index[0])
     return transposed_df
 
@@ -30,14 +29,14 @@ if __name__ == '__main__':
         nmv = []
         acv = []
         modelFiles = []
-        pair_scores = np.zeros((num, num))
+        all_scores = np.zeros((num, num))
         for i in range(num):
             fname = 'saved_{}_{}.pkl'.format(i*5+4, metric)
             with open(fname, 'rb') as f:
                 silds, nm, ac = pk.load(f)
             for j in range(num):
                 kname = '{}'.format(j*5+4)
-                pair_scores[i,j] = silds[kname]
+                all_scores[i,j] = silds[kname]
             nmv.append(np.round(nm,3))
             acv.append(np.round(ac,3))
             modelFiles.append('model{}'.format(i))
@@ -46,17 +45,17 @@ if __name__ == '__main__':
         nmv = dict(zip(modelFiles, nmv))
         acv = dict(zip(modelFiles, acv))
 
-        sv = np.diag(pair_scores)
+        sv = np.diag(all_scores)
         sv = dict(zip(modelFiles, sv))
 
         nmvd, _, nmv = sort_and_match(nmv, modelFiles)
         acvd, _, acv = sort_and_match(acv, modelFiles)
         svd, _, sv = sort_and_match(sv, modelFiles)
 
-        label_score = eval_pool(modelFiles, pair_scores)
+        label_score = eval_pool(modelFiles, all_scores)
 
         lsd, _, label_score = sort_and_match(label_score, modelFiles)
-        st_score, graph, outliers, labels, best_n, prv, labels_initial = eval_ace(modelFiles, pair_scores, np.array(modelFiles), 0.05,
+        st_score, graph, outliers, labels, best_n, prv, labels_initial = eval_ace(modelFiles, all_scores, np.array(modelFiles), 0.05,
                                                                         0.1, 'hdbscan', 'pr')
 
         print('--------------------------------------------------')
