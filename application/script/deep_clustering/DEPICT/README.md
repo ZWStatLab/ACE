@@ -1,5 +1,5 @@
 ## DEPICT Experiments
-This folder explains how to adapt the DEPICT (https://github.com/herandy/DEPICT) training script to reproduce the deep clustering results used in our experiments.
+This folder explains how to adapt the DEPICT (https://github.com/herandy/DEPICT) training script to generate the deep clustering results used in our experiments.
 
 ## Hyperparameter tuning
 1. Clone the original JULE repo:
