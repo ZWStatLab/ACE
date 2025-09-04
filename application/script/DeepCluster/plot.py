@@ -5,7 +5,7 @@ import plotly.express as px
 if __name__ == '__main__':
     import argparse,os
     parser = argparse.ArgumentParser()
-    parser.add_argument('--id', default='1')
+    parser.add_argument('--id', default='0')
     args = parser.parse_args()
     npfiles='npfiles_val'
     imgdir = os.path.join(npfiles, "app")

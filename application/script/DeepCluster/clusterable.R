@@ -9,7 +9,6 @@ ds = args[1]
 nargs = nargs - 1
 
 pvalues1 <- c()
-pvalues2 <- c()
 
 for(i in 1:nargs){
     model = args[i+1]

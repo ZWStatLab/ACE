@@ -7,7 +7,6 @@ import glob
 from scipy.optimize import linear_sum_assignment
 import pickle
 import argparse
-from joblib import parallel_backend
 
 
 def calinski_harabasz_score(x,y):
@@ -49,21 +48,21 @@ def clustering_accuracy(gtlabels, labels):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--id', default='4', help="the index of checkpiont to be saved")
-parser.add_argument('--metric', default='euclidean', help="metrics to be saved; have to be in [cosine, euclidean, dav, ch]")
+parser.add_argument('--id', default='4', help="index of the checkpoint from which embeddings are extracted for evaluation")
+parser.add_argument('--metric', default='euclidean', help="metrics to be used; have to be in [cosine, euclidean, dav, ch]")
 args = parser.parse_args()
 
 
 estimates = {}
+
+## Load all saved estimates from DeepCluster training (every 5 epochs)
 for ii in range(4, 100, 5):
     file2 = os.path.join('npfiles_val', 'pro_output_{}.npz'.format(ii))
-    print(file2)
     data = np.load(file2)
     estimates[str(ii)] = np.squeeze(data['estimates'])
 
-print('reading')
+## Load the embeddings to be used for evaluation from the saved outputs from DeepCluster training
 run_file='pro_output_{}.npz'.format(args.id)
-print(run_file)
 run_path = os.path.join('npfiles_val', run_file)
 data = np.load(run_path)
 features = data['pro_features']
@@ -78,7 +77,6 @@ print(features.shape)
 metric = args.metric 
 sil_eu = {}
 for key, value in estimates.items():
-    print(key)
     sil_eu[key] = clustering_score(features, value, metric=metric)
 
 
