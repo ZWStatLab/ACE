@@ -90,7 +90,7 @@ if __name__ == '__main__':
     for m in modelFiles:
         x = features[m]
         jeu0, TT0, md0, cmd0 = gen_value(x)
-        np.savez(os.path.join(tmppath, '{}.npz'.format(m)), jeu=jeu0, TT=TT0, ss=ss0, vv=vv0, md=md0, cmd=cmd0)
+        np.savez(os.path.join(tmppath, '{}.npz'.format(m)), jeu=jeu0, TT=TT0, md=md0, cmd=cmd0)
         for key in labels.keys():
             y = labels[key]
             score_local = clustering_score(x, y, metric=metric)
