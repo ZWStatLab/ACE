@@ -36,7 +36,7 @@ def clustering_score(x,y, metric):
         return silhouette_score(x, y, metric=metric)
 
 
-def gen_value(feature, eig=True): 
+def gen_value(feature): 
     nn, pp = feature.shape
     TT = feature.T @ feature 
     jeu = np.array(feature)
