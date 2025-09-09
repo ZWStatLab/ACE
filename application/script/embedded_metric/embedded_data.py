@@ -39,18 +39,10 @@ def clustering_score(x,y, metric):
 def gen_value(feature, eig=True): 
     nn, pp = feature.shape
     TT = feature.T @ feature 
-    if eig:
-        eigenValues, _ = LA.eig(TT/(nn-1))
-        ss = np.sqrt(eigenValues)
-        ss[ss==0] = 1
-        vv  = np.prod(ss)
     jeu = np.array(feature)
     md = metrics.pairwise_distances(jeu, metric='euclidean')
     cmd = metrics.pairwise_distances(jeu, metric='cosine')
-    if eig:
-        return jeu, TT, ss, vv, md, cmd
-    else:
-        return jeu, TT, md, cmd
+    return jeu, TT, md, cmd
 
 
 if __name__ == '__main__':
@@ -97,7 +89,7 @@ if __name__ == '__main__':
     
     for m in modelFiles:
         x = features[m]
-        jeu0, TT0, ss0, vv0, md0, cmd0 = gen_value(x)
+        jeu0, TT0, md0, cmd0 = gen_value(x)
         np.savez(os.path.join(tmppath, '{}.npz'.format(m)), jeu=jeu0, TT=TT0, ss=ss0, vv=vv0, md=md0, cmd=cmd0)
         for key in labels.keys():
             y = labels[key]
