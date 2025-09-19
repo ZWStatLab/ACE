@@ -57,22 +57,6 @@ def clustering_score(x,y, metric):
         return silhouette_score(x, y, metric=metric)
 
 
-def gen_value(feature, eig=True): 
-    nn, pp = feature.shape
-    TT = feature.T @ feature 
-    if eig:
-        eigenValues, _ = LA.eig(TT/(nn-1))
-        ss = np.sqrt(eigenValues)
-        ss[ss==0] = 1
-        vv  = np.prod(ss)
-    jeu = np.array(feature)
-    md = metrics.pairwise_distances(jeu, metric='euclidean')
-    cmd = metrics.pairwise_distances(jeu, metric='cosine')
-    if eig:
-        return jeu, TT, ss, vv, md, cmd
-    else:
-        return jeu, TT, md, cmd
-
 
 if __name__ == '__main__':
 
