@@ -8,8 +8,8 @@ import os
 import pandas as pd
 import pickle as pk
 
-tasks = ['jule_num', 'DEPICTnum']
-task_name = {'jule_num': 'JULE', 'DEPICTnum': 'DEPICT'}
+tasks = ['JULE_num', 'DEPICT_num']
+task_name = {'JULE_num': 'JULE', 'DEPICT_num': 'DEPICT'}
 
 
 strategys= ['raw', 'pair', 'pool', 'ace']
