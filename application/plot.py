@@ -121,7 +121,6 @@ for task in tasks:
             cticks = [5, 10 ,15, 20]
 
 
-
         ax.yaxis.set_ticks(cticks)
         ax.set_ylim(ymin, ymax+5)
         ax.grid(True,alpha=0.7, zorder=1)

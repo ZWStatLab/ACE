@@ -17,7 +17,6 @@ index = ['Davies-Bouldin', 'Calinski-Harabasz', 'Silhouette (cosine)', 'Silhouet
 
 
 strategy_colors = {
-#'Horovod': "g",
 'truth': mpl.colors.cnames["steelblue"],
 'raw': '#FFB6C1',
 'pair': '#90EE90',
@@ -38,13 +37,11 @@ for ext in ['nmi', 'acc']:
         data_load = pk.load(op)
     for task in tasks:
         data_t = data_load[task]
-        # Generating sample data for 16 boxplots
         for crit in ['tau', 'corr']:
             data_c = data_t[crit]
             fig, ax = plt.subplots(figsize=(12, 6))
-            # Define the positions for the boxplots
             positions = []
-            group_gap = 5  # Larger space between groups
+            group_gap = 5  
             for i in range(4):
                 positions.extend([i * group_gap + j for j in range(4)])
             for i, metric in enumerate(['dav', 'ch', 'cosine', 'euclidean']):
@@ -58,15 +55,12 @@ for ext in ['nmi', 'acc']:
                     patch.set_hatch(hatch)
                 if i != 3:
                     ax.axvline(x= positions[end-1] + 1, color='gray', linestyle='--', linewidth=1)
-            #handles = [plt.Line2D([0], [0], color=color, lw=4) for color in colors]
             handles = [
                 Patch(facecolor=color, edgecolor='black', hatch=hatch)
                 for color, hatch in zip(colors, hatch_styles)
             ]
-            #ax.set_ylim(data.min()-0.2, data.max())
             ax.legend(handles, strategys_legend, loc = 'lower right', ncol = 1, fontsize = 12.5)
             plt.setp(ax.get_legend().get_texts(), fontweight='bold')  # Bold the legend text
-            # Customizing the plot
             current_ylim = ax.get_ylim()
             new_ylim = (current_ylim[0] - 0.1, current_ylim[1])
             ax.set_ylim(new_ylim)
@@ -76,7 +70,6 @@ for ext in ['nmi', 'acc']:
             for spine in ax.spines.values():
                 spine.set_linewidth(2)  # Bold frame
                 spine.set_color("black")  # Optional: change color of the frame
-            #ax.set_xlabel('Groups')
             if crit == 'tau':
                 if ext == 'acc':
                     ax.set_ylabel(r'Kendall rank correlation $\tau_{B}$ (vs. ACC)',fontsize = 12, fontweight='bold')
@@ -88,6 +81,4 @@ for ext in ['nmi', 'acc']:
                 else:
                     ax.set_ylabel(r"Spearman's rank correlation $r_s$ (vs. NMI)",fontsize = 12, fontweight='bold')
             ax.grid(axis='y', linestyle='--', alpha=0.7)
-            # plt.tight_layout()
-            # plt.subplots_adjust(top=0.85, bottom=0.15, left=0.15, right=0.85)
             plt.savefig('{}_{}_{}.pdf'.format(ext, task, crit), transparent=True, bbox_inches='tight', pad_inches=0.05)
