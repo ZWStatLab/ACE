@@ -65,11 +65,11 @@ for ext in ['nmi', 'acc']:
             new_ylim = (current_ylim[0] - 0.1, current_ylim[1])
             ax.set_ylim(new_ylim)
             ax.set_xticks([(group_gap * i) + 1.5 for i in range(4)])  # Tick at the middle of each group
-            ax.set_xticklabels([index[i] for i in range(len(index))], fontsize=14, fontweight='bold')
+            ax.set_xticklabels(index, fontsize=14, fontweight='bold')
             ax.set_title(tasksv[task], fontsize=16, fontweight='bold')
             for spine in ax.spines.values():
-                spine.set_linewidth(2)  # Bold frame
-                spine.set_color("black")  # Optional: change color of the frame
+                spine.set_linewidth(2)  
+                spine.set_color("black")  
             if crit == 'tau':
                 if ext == 'acc':
                     ax.set_ylabel(r'Kendall rank correlation $\tau_{B}$ (vs. ACC)',fontsize = 12, fontweight='bold')
