@@ -33,7 +33,7 @@ strategy_hatchs = {
 
 
 for task in tasks:
-    if 'jule' in task:
+    if 'JULE' in task:
         dataset = ["YTF",  "FRGC", "COIL-20", "COIL-100", "CMU-PIE", "UMist", "USPS", "MNIST-test"]
     else:
         dataset = ["YTF",  "FRGC", "CMU-PIE", "USPS", "MNIST-test"]
