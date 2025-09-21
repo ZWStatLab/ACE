@@ -515,10 +515,10 @@ def make_data_plot(dlabels, selected_group, eval_data, task, metric, save_path):
     '''
     make tsne plot
     '''
-    tasks = {'jule_hyper': './JULE_hyper',
-             'jule_num': './JULE_num',
-             'DEPICT': './DEPICT_hyper',
-             'DEPICTnum': './DEPICT_num'
+    tasks = {'JULE_hyper': './JULE_hyper',
+             'JULE_num': './JULE_num',
+             'DEPICT_hyper': './DEPICT_hyper',
+             'DEPICT_num': './DEPICT_num'
              }
     spaceFiles = np.array(list(dlabels.keys()))
     labels = np.array(list(dlabels.values()))
@@ -533,14 +533,9 @@ def make_data_plot(dlabels, selected_group, eval_data, task, metric, save_path):
         os.mkdir(save_path)
     # prepare truth label
     rpath = tasks[task]
-    if 'jule' in task:
-        rpath = os.path.join(rpath, 'jule') # root path
-    dpath = os.path.join(rpath, 'datasets') # data path
-    dpath = os.path.join(dpath, eval_data)
-    if 'jule' in task:
-        dpath = os.path.join(dpath, 'data4torch.h5')
-    else:
-        dpath = os.path.join(dpath, 'data.h5')
+    dpath = os.path.join('datasets', eval_data)
+    dpath = os.path.join(dpath, 'data4torch.h5')
+
     y = np.squeeze(np.array(h5py.File(dpath, 'r')['labels']))
     _, y = np.unique(y, return_inverse=True)
     labels_unique = np.unique(labels)
@@ -558,11 +553,11 @@ def make_data_plot(dlabels, selected_group, eval_data, task, metric, save_path):
             os.mkdir(spath)
         spaces = spaceFiles[labels==ul].tolist()
         for sp in spaces:
-            if 'jule' in task:
-                fpath = os.path.join(rpath, 'feature{}.h5'.format(sp))
+            if 'JULE' in task:
+                fpath = os.path.join(rpath, 'deep_clustering_outputs', 'feature{}.h5'.format(sp))
                 X = np.array(h5py.File(fpath, 'r')['feature'])
             else:
-                fpath = os.path.join(rpath, sp)
+                fpath = os.path.join(rpath, 'deep_clustering_outputs', 'output{}.h5'.format(sp))
                 X=np.array(np.load(fpath)['y_features'])
             fig = plot_tsne(X, y, eval_data)
             if (best_space != None) and (best_space == sp):
