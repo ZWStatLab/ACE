@@ -557,7 +557,7 @@ def make_data_plot(dlabels, selected_group, eval_data, task, metric, save_path):
                 fpath = os.path.join(rpath, 'deep_clustering_outputs', 'feature{}.h5'.format(sp))
                 X = np.array(h5py.File(fpath, 'r')['feature'])
             else:
-                fpath = os.path.join(rpath, 'deep_clustering_outputs', 'output{}.h5'.format(sp))
+                fpath = os.path.join(rpath, 'deep_clustering_outputs', sp)
                 X=np.array(np.load(fpath)['y_features'])
             fig = plot_tsne(X, y, eval_data)
             if (best_space != None) and (best_space == sp):
