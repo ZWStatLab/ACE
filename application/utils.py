@@ -539,9 +539,6 @@ def make_data_plot(dlabels, selected_group, eval_data, task, metric, save_path):
     y = np.squeeze(np.array(h5py.File(dpath, 'r')['labels']))
     _, y = np.unique(y, return_inverse=True)
     labels_unique = np.unique(labels)
-    best_space = None
-    if selected_group not in labels_unique:
-        best_space = spaceFiles[selected_group]
     # make tsne plot for each space in each group
     for ul in labels_unique:
         if ul == selected_group:
@@ -560,10 +557,7 @@ def make_data_plot(dlabels, selected_group, eval_data, task, metric, save_path):
                 fpath = os.path.join(rpath, 'deep_clustering_outputs', sp)
                 X=np.array(np.load(fpath)['y_features'])
             fig = plot_tsne(X, y, eval_data)
-            if (best_space != None) and (best_space == sp):
-                wpath = os.path.join(spath,"{}_selected.png".format(sp))
-            else:
-                wpath = os.path.join(spath,"{}.png".format(sp))
+            wpath = os.path.join(spath,"{}.png".format(sp))
             fig.write_image(wpath)
 
 if __name__ == '__main__':
