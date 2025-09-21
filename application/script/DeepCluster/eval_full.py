@@ -138,7 +138,6 @@ if __name__ == '__main__':
     df_nmi = df_nmi.sort_index(axis=1, level=0, ascending=False)
     df_acc = df_acc.sort_index(axis=1, level=0, ascending=False)
 
-    #print(df_nmi)
 
     if vertical:
         df_nmi = df_nmi.reindex(lname[1:][::-1])

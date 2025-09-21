@@ -100,7 +100,6 @@ def short_name(df, ext):
 def transpose(df):
     transposed_df = df.T
     transposed_df.columns = transposed_df.iloc[0]
-    # drop the first row (original column headers)
     transposed_df = transposed_df.drop(transposed_df.index[0])
     return transposed_df
 

@@ -83,13 +83,13 @@ print(unique(cl1))
 
 ccc = WBT(x=jeu, cl=cl1, P=TT,s=ss,vv=vv) #max
 print('ccc')
-dunn = Index.dunn(md, cl1, Data=jeu, method=NULL) #max Index.dunn(md, cl1); depend on md matrix
+dunn = Index.dunn(md, cl1, Data=jeu, method=NULL) #max 
 print('dunn')
-cind = - Indice.cindex(d=md, cl=cl1) #min #depend on md matrix
+cind = - Indice.cindex(d=md, cl=cl1) #min 
 print('cind')
-sdbw = - SDbw(jeu, cl1) #min # need data
+sdbw = - SDbw(jeu, cl1) #min 
 print('sdbw')
-ccdbw = CDbw(jeu, cl1) #max # need data
+ccdbw = CDbw(jeu, cl1) #max 
 print('cdbw')
   
 print('done')

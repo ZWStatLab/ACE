@@ -17,7 +17,7 @@ datasets_all = {
 
 step = 1 #step = 2
 
-# step one
+# step 1
 if step == 1:
     for task in datasets_all.keys():
         datasets = datasets_all[task]
@@ -56,7 +56,6 @@ elif step == 2:
     subf = open('submit2.py','w')
     subf.write('import os\n')
     for task in datasets_all.keys():
-        #subf = open('submit{}.py'.format(task),'w')
         datasets = datasets_all[task]
         for dataset in datasets:
             with open(os.path.join('file_list', task, "{}.txt".format(dataset)), "r") as file:

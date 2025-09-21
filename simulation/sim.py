@@ -21,7 +21,6 @@ option = args.option
 seed_value = args.seed
 np.random.seed(seed_value)
 
-# Parameters for high-dimensional data
 n_total_features = 50000
 n_embedding_features = 100
 n_samples = 1000     # Number of samples
@@ -65,7 +64,7 @@ for i in range(n_clusters):
     cluster_data = np.random.multivariate_normal(
         mean=mean_clusters[i], cov=latent_cov_matrix, size=n_samples_per_cluster
     )
-    # Assign generated data to the corresponding indices in X
+    # Assign generated data given the corresponding indices
     X_latent[start:stop] = cluster_data
     if option == 'dense':
         cluster_data_dense = np.random.multivariate_normal(

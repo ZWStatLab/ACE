@@ -24,12 +24,12 @@ strategy_colors = {
 'ace': '#00BFFF'}
 colors = [strategy_colors['raw'], strategy_colors['pair'], strategy_colors['pool'], strategy_colors['ace']]
 hatch_styles = ['///', '---', '||', '\\\\\\']
-flierprops = dict(marker='o', color='black', alpha=0.5, markersize=1.5)  # Smaller outlier dots
-medianprops = dict(color='darkred', linewidth=1.5)  # Bold mean line
+flierprops = dict(marker='o', color='black', alpha=0.5, markersize=1.5)  
+medianprops = dict(color='darkred', linewidth=1.5)  
 meanprops = {
-    "marker": "^",  # Shape of the mean dot
-    "markerfacecolor": "red",  # Fill color of the mean dot
-    "markeredgecolor": "red",  # Edge color of the mean dot
+    "marker": "^",  # shape 
+    "markerfacecolor": "red",  # fill color 
+    "markeredgecolor": "red",  # edge color 
     "markersize": 5
 }
 for ext in ['nmi', 'acc']:
@@ -60,11 +60,11 @@ for ext in ['nmi', 'acc']:
                 for color, hatch in zip(colors, hatch_styles)
             ]
             ax.legend(handles, strategys_legend, loc = 'lower right', ncol = 1, fontsize = 12.5)
-            plt.setp(ax.get_legend().get_texts(), fontweight='bold')  # Bold the legend text
+            plt.setp(ax.get_legend().get_texts(), fontweight='bold')  
             current_ylim = ax.get_ylim()
             new_ylim = (current_ylim[0] - 0.1, current_ylim[1])
             ax.set_ylim(new_ylim)
-            ax.set_xticks([(group_gap * i) + 1.5 for i in range(4)])  # Tick at the middle of each group
+            ax.set_xticks([(group_gap * i) + 1.5 for i in range(4)])  
             ax.set_xticklabels(index, fontsize=14, fontweight='bold')
             ax.set_title(tasksv[task], fontsize=16, fontweight='bold')
             for spine in ax.spines.values():

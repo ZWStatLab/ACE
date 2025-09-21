@@ -39,6 +39,7 @@ if __name__ == '__main__':
                     data = np.load(file)
                     for metric in metric_list:
                         value = data[metric]
+                        # handle abnormal function output values
                         if value == True:
                             print('cv',value)
                             value = np.nan

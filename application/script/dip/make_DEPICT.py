@@ -14,19 +14,12 @@ datasets = ['USPS', 'YTF', 'FRGC', 'MNIST-test', 'CMU-PIE']
 
 for task in ['DEPICT_hyper', 'DEPICT_num']:
     for eval_data in datasets:
-        #with open(os.path.join('file_list', 'DEPICT_hyper', "{}.txt".format(eval_data)), "r") as file:
-        #with open(os.path.join('file_list', 'DEPICT_num', "{}.txt".format(eval_data)), "r") as file:
         with open(os.path.join('file_list', task, "{}.txt".format(eval_data)), "r") as file:
             modelFiles = [line.strip() for line in file.readlines()]
         print(modelFiles)
-        #modelFiles = [m[5:-4] for m in modelFiles]
         cmd = 'Rscript clusterable_DEPICT.R {} {}'.format(task, eval_data)
         for m in modelFiles:
             cmd += ' {}'.format(m)
-        # print(cmd)
-        # os.system(cmd)
-        # while not os.path.isfile('dip_{}.npz'.format(eval_data)):
-        #     time.sleep(0.1)
         job = 'dip{}_{}'.format(task, eval_data)
         jobName = job + '.sh'
         outf = open(jobName,'w')
