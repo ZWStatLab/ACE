@@ -115,7 +115,7 @@ if __name__ == '__main__':
                 _, _, ace_score = sort_and_match(ace_score, modelFiles)
 
                 # make the graph
-                l = graph_plot(l, graph, labels, save_path, eval_data, metric)
+                l = graph_plot(l, graph, labels_initial, save_path, eval_data, metric)
                 # make the tsne plot
                 if args.tsne:
                     make_data_plot(labels, selected_group, eval_data, task, metric, save_path)
