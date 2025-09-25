@@ -1,8 +1,7 @@
 import os,sys
 import time
 
-datasets = ['USPS', 'MNIST-test', 'FRGC', 'YTF', 'UMist'] #
-face = ['FRGC', 'UMist', 'YTF']
+datasets = ['USPS', 'MNIST-test', 'FRGC', 'YTF', 'CMU-PIE'] 
 
 for dataset in datasets:
   if dataset == 'YTF':
@@ -11,11 +10,10 @@ for dataset in datasets:
     numcls = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
   elif dataset == 'MNIST-test':
     numcls = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
-  elif dataset == 'UMist':
-    numcls = [10, 15, 20, 25, 30, 35, 40, 45, 50]
   elif dataset == 'FRGC':
     numcls = [10, 15, 20, 25, 30, 35, 40, 45, 50]
-
+  elif dataset == 'CMU-PIE':
+    numcls = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 
   for numcl in numcls:
     try:
