@@ -227,65 +227,6 @@ def filter_out(pvalues, models, method='holm',alpha=0.1):
     keep_models = [m for i, m in enumerate(models) if r[i]]
     return keep_models
 
-def com_layout(graph, partition):
-    '''
-    get the layout for plotting the graph
-    '''
-    pos = {}
-    pos_com = communities_position(graph, partition, scale=3.)
-    pos_nodes = nodes_position(graph, partition, scale=1.)
-    for node in graph.nodes():
-        pos[node] = pos_com[node] + pos_nodes[node]
-    return pos
-
-def communities_position(graph, partition, **kwargs):
-    '''
-    get the layout for plotting the graph
-    '''
-    communities = set(list(partition.values()))
-    hypergraph = nx.DiGraph()
-    hypergraph.add_nodes_from(communities)
-    btw_community_edges = find_btw_edges(graph, partition)
-    for (ci, cj), edges in btw_community_edges.items():
-        hypergraph.add_edge(ci, cj, weight=len(edges))
-    pos_communities = nx.spring_layout(hypergraph, **kwargs)
-    pos = {}
-    for node, community in partition.items():
-        pos[node] = pos_communities[community]
-    return pos
-
-def find_btw_edges(graph, partition):
-    '''
-    get the layout for plotting the graph
-    '''
-    edges = {}
-    for (ei, ej) in graph.edges():
-        ci = partition[ei]
-        cj = partition[ej]
-        if ci != cj:
-            try:
-                edges[(ci, cj)] += [(ei, ej)]
-            except:
-                edges[(ci, cj)] = [(ei, ej)]
-    return edges
-
-def nodes_position(graph, partition, **kwargs):
-    '''
-    get the layout for plotting the graph
-    '''
-    communities = {}
-    for node, com in partition.items():
-        try:
-            communities[com] += [node]
-        except:
-            communities[com] = [node]
-    pos = {}
-    for ci, nodes in communities.items():
-        subgraph = graph.subgraph(nodes)
-        pos_subgraph = nx.spring_layout(subgraph, **kwargs)
-        pos.update(pos_subgraph)
-    return pos
-
 def kendalltau(score1, score2):
     '''
     calculate kendal tau rank correlation
@@ -474,40 +415,6 @@ def eval_ace(modelFiles, scores, spaceFiles, eps=0.05, alpha=0.01, cl_method='db
                     return solve_score, graph, outliers, dlabels_updated, best_n, prv, dlabels
     else:
         return solve_out_score, graph, outliers, dlabels_updated, best_out, spaceFiles[best_out], dlabels
-
-def label_map_color(labels):
-    '''
-    map color to label in the graph plot
-    '''
-    color_map = {0: 'red', 1: 'blue', 2: 'green', 3: 'yellow', 4: 'orange', 5: 'purple', 6: 'pink',
-                 7: 'brown', 8:'violet', 9:'cyan', 10:'maroon', 11: 'teal', 12: 'indigo',
-                 13: 'tan', 14: 'magenta', 15: 'salmon'}
-    ulabels = np.unique(labels)
-    color_map1 = {}
-    i = 0
-    for _, ul in enumerate(ulabels):
-        if ul >= 100000:
-            color_map1[ul] = 'olive'
-        else:
-            color_map1[ul] = color_map[i]
-            i = i + 1
-    color_map1[-1] = 'grey'
-    values = [color_map1[v] for v in labels]
-    return values
-
-def graph_plot(l, graph, dlabels, save_path, eval_data, metric):
-    '''
-    make the plot for the graph of spaces
-    '''
-    values = label_map_color(list(dlabels.values()))
-    plt.figure(l)
-    partitions = {}
-    for i, v in enumerate(list(dlabels.values())):
-        partitions[i] = v
-    nx.draw(graph, pos=com_layout(graph, partitions), node_color=values, with_labels=True)
-    plt.savefig(os.path.join(save_path, "{}_{}.png".format(eval_data, metric)))
-    l = l+1
-    return l
 
 
 
