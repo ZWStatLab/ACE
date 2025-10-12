@@ -4,6 +4,7 @@ This folder explains how to adapt the DEPICT (https://github.com/herandy/DEPICT)
 ## Hyperparameter tuning
 1. Clone the original JULE repo:
    `git clone https://github.com/herandy/DEPICT`
+   DEPICT loads data from files in the format `$DATASET/data.h5`. Adjust the dataset path accordingly if reusing data from JULE.
 2. In the file `functions.py`, change the following lines:
    - insert the following after Line 717
    ```python
