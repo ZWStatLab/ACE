@@ -169,7 +169,7 @@ Scripts for generating internal measure values used for the evaluation are in th
 After completing the steps, all internal scores calculated based on the raw space $`\pi(\rho_{m'} | \mathcal{X})`$ for all metrics are saved in a file with the format `merge_all_{$METRIC}_score.pkl`. Additionally, the outputs are available in our Google Drive under the directory `$TASK/raw_metric`.
 
 ### Dip Test
-Scripts for conducting the Dip test on embedding data derived from JULE and DEPICT are located in the `application/scripts/dip` folder. The scripts `clusterable_DEPICT.R` and `clusterable_jule.R` are specifically designed to perform Dip tests on embedding data obtained from DEPICT and JULE, respectively.  
+Scripts for conducting the Dip test on embedding data derived from JULE and DEPICT are located in the `application/scripts/dip` folder. The scripts `clusterable_DEPICT.R` and `clusterable_jule.R` are specifically designed to perform Dip tests on embedding data obtained from DEPICT and JULE, respectively.  When running these scripts, ensure that the `file_list` folder, the `datasets` folder, and all task folders (i.e., the ones downloaded from Google Drive) are located in the same directory as the scripts.
 
 To execute the tests, use the following commands:  
 - For DEPICT embeddings:  
