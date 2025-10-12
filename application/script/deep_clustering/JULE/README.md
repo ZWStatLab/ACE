@@ -1,5 +1,5 @@
 ## JULE Experiments
-This folder explains how to adapt the JULE (https://github.com/jwyang/JULE.torch) training script to generate the deep clustering results used in our experiments.
+This page explains how to adapt the JULE (https://github.com/jwyang/JULE.torch) training script to generate the deep clustering results used in our experiments.
 ## Hyperparameter tuning
 1. Clone the original JULE repo:
    `git clone https://github.com/jwyang/JULE.torch`
