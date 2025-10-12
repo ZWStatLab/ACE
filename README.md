@@ -141,7 +141,7 @@ python script/get_truth.py --dataset COIL-20 --task JULE_hyper
 After completing the steps, the values of the external measures are saved in a file with the format `true_{$DATASET}.pkl`. Additionally, the outputs are available in our Google Drive under the directory `$TASK/external_metric`.
 
 ### Generate Internal Measure Values
-All scripts to generate internal measure values for the evaluation are in the `application/scripts/embedded_metric` folder. Since some internal measure values can only be obtained through R packages, both R and Python scripts are used. Similarly, we provide the `make.py` script to automate the execution of our scripts by generating shell scripts for cluster submission. Customize the script to fit your computing environment and directory structure as needed.
+All scripts to generate internal measure values for the evaluation are in the `application/scripts/embedded_metric` folder. Since some internal measure values can only be obtained through R packages, both R and Python scripts are used. When running these scripts, ensure that the `file_list` folder, the `datasets` folder, and all task folders (i.e., the ones downloaded from Google Drive) are located in the same directory as the scripts. Similarly, we provide the `make.py` script to automate the execution of our scripts by generating shell scripts for cluster submission. Customize the script to fit your computing environment and directory structure as needed.
 
 1. **Calculate Measure Values**:
    - Step 1: `embedded_data.py`: Calculates measure values for the four internal measures reported in the main paper and prepares intermediate inputs for the R script.
