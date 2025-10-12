@@ -156,7 +156,7 @@ After completing the steps, all internal scores calculated based on the embeddin
 
 ### Generate Raw Scores
 
-Scripts for generating internal measure values used for the evaluation are in the `application/scripts/raw_metric` folder. Both R and Python scripts are utilized.
+Scripts for generating internal measure values used for the evaluation are in the `application/scripts/raw_metric` folder. Both R and Python scripts are utilized. When running these scripts, ensure that the `file_list` folder, the `datasets` folder, and all task folders (i.e., the ones downloaded from Google Drive) are located in the same directory as the scripts.
 
 1. **Calculate Measure Values**:
    - `get_raw.py`: Calculates measure values for the four internal measures reported in the main paper and prepares intermediate inputs for the R script.
