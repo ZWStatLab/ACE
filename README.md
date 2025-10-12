@@ -54,9 +54,9 @@ To automate the generation of all simulations, run the script `make_sim.py`. Thi
 #### **2. Compute Internal Scores and Dip Test Results**  
 For each simulated dataset, internal scores and dip test results must be computed across all embedding spaces.  
 
-- **Internal Scores:**  The script `calculate_metrics.py` computes internal scores for a single simulated dataset using one of the metrics reported in the main text. Run `make_metrics.py` to generate shell scripts for submitting jobs to a SLURM cluster, automating the computation of internal scores across all datasets and metrics.
+- **Internal Scores:**  The script `calculate_metrics.py` computes internal scores for a single simulated dataset using one of the metrics reported in the main text. `make_metrics.py` can be used to generate shell scripts for submitting jobs to a SLURM cluster, automating the computation of internal scores across all datasets and metrics.
 
-- **Dip Test Results:**  The script `clusterable.R` generates the dip test results for a single simulated dataset.  Run `make_dip.py` to generate shell scripts for submitting jobs to a SLURM cluster, automating dip test computations across all datasets.  
+- **Dip Test Results:**  The script `clusterable.R` generates the dip test results for a single simulated dataset.  `make_dip.py` can be used to generate shell scripts for submitting jobs to a SLURM cluster, automating dip test computations across all datasets.  
 
 #### **3. Compute Final Weighted Scores and Generate Plots**  
 - Firstly run `ACE.py` to compute and save the final weighted scores produced by ACE.  
