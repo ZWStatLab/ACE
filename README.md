@@ -164,7 +164,7 @@ Scripts for generating internal measure values used for the evaluation are in th
    - `collect_raw.py`: Collect and post-processes the calculated values. Run this step after completing Step 1 and Step 2 to collect and process abnormal values from the calculated internal measure scores from the raw data.
 
 2. **Generate Shell Scripts for Slurms**:
-   - `make.py`: Generates shell scripts for submission to SLURM, serving as a reference for users to create their own submission scripts. This script implements the first two steps across metrics, datasets, and tasks. To switch to the second step after completing the first, simply modify Line 26 from `step = 1` to `step = 2`.
+   - `make.py`: Generates shell scripts for submission to SLURM, serving as a reference for users to create their own submission scripts. This script implements the first two steps across metrics, datasets, and tasks. To switch to the second step after completing the first, simply modify Line 18 from `step = 1` to `step = 2`.
 
 After completing the steps, all internal scores calculated based on the raw space $`\pi(\rho_{m'} | \mathcal{X})`$ for all metrics are saved in a file with the format `merge_all_{$METRIC}_score.pkl`. Additionally, the outputs are available in our Google Drive under the directory `$TASK/raw_metric`.
 
