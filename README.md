@@ -181,7 +181,7 @@ To execute the tests, use the following commands:
   Rscript clusterable_jule.R $dataset $embedding_file1 $embedding_file2 $embedding_file3 ...
   ```  
 
-Additionally, we provide `make_DEPICT.py` and `make_jule.py`, which generate shell scripts for submission to SLURM. These scripts facilitate running the tests across all embedding data generated for various datasets and tasks. After completing the steps, the results of the DIP test are saved in a file with the format `dip_{$DATASET}.npz`. Additionally, the outputs are available in our Google Drive under the directory `$TASK/external_metric`. Additionally, the outputs are available in our Google Drive under the directory `$TASK/dip_test`.
+Additionally, we provide `make_DEPICT.py` and `make_jule.py`, which generate shell scripts for submission to SLURM. These scripts facilitate running the tests across all embedding data generated for various datasets and tasks. After completing the steps, the results of the DIP test are saved in a file with the format `dip_{$DATASET}.npz`. Additionally, the outputs are available in our Google Drive under the directory `$TASK/dip_test`.
 
 The structure of the files saved from the calculation of internal measure scores, external measure scores, and Dip test results is as follows:  
 
