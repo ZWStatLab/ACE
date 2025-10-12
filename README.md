@@ -128,14 +128,14 @@ The content in these files follows the structure below:
 Ensure all downloaded image datasets are stored in the `application/scripts/datasets` folder. Navigate to the `application/scripts` folder and run the following command to get the NMI and ACC values:
 
 ```bash
-python get_truth.py --dataset <DATASET> --task <TASK>
+python script/get_truth.py --dataset <DATASET> --task <TASK>
 ```
 For the `--dataset` argument, provide the dataset names exactly as they appear in their respective downloaded folders. For the `--task` argument, specify one of the following: `JULE_hyper`, `JULE_num`, `DEPICT_hyper`, or `DEPICT_num`, which correspond to the two experiments—hyperparameter tuning and number cluster determination—conducted with JULE and DEPICT, respectively.
 
 Example for the JULE hyperparameter experiment on the COIL-20 dataset:
 
 ```bash
-python get_truth.py --dataset COIL-20 --task JULE_hyper
+python script/get_truth.py --dataset COIL-20 --task JULE_hyper
 ```
 
 After completing the steps, the values of the external measures are saved in a file with the format `true_{$DATASET}.pkl`. Additionally, the outputs are available in our Google Drive under the directory `$TASK/external_metric`.
