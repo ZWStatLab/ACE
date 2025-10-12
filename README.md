@@ -198,7 +198,7 @@ The structure of the files saved from the calculation of internal measure scores
 | `scored` | dict | Key: Metric name; Value: A dictionary where the key is the tag name of the evaluated partitioning outcome and the value is the corresponding score for the metric                       |
 | **File: `$TASK/dip_test/dip_{$DATASET}.npz`** | |                                                                                                                                                                                         |
 | `pvalues1` | ndarray | P-values from Dip tests                                                                                                                                                                 |
-| `models` | ndarray | Tag names for tested spaces                                                                                                                                                             |
+| `models` | ndarray | Tag names for the dataset and all tested spaces                                                                                                                                         |
 
 
 
