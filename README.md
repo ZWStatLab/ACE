@@ -130,12 +130,12 @@ Ensure all downloaded image datasets are stored in the `application/scripts/data
 ```bash
 python get_truth.py --dataset <DATASET> --task <TASK>
 ```
-For the `--dataset` argument, provide the dataset names exactly as they appear in their respective downloaded folders. For the `--task` argument, specify one of the following: `jule`, `julenum`, `DEPICT`, or `DEPICTnum`, which correspond to the two experiments—hyperparameter tuning and number cluster determination—conducted with JULE and DEPICT, respectively.
+For the `--dataset` argument, provide the dataset names exactly as they appear in their respective downloaded folders. For the `--task` argument, specify one of the following: `JULE_hyper`, `JULE_num`, `DEPICT_hyper`, or `DEPICT_num`, which correspond to the two experiments—hyperparameter tuning and number cluster determination—conducted with JULE and DEPICT, respectively.
 
 Example for the JULE hyperparameter experiment on the COIL-20 dataset:
 
 ```bash
-python get_truth.py --dataset COIL-20 --task jule
+python get_truth.py --dataset COIL-20 --task JULE_hyper
 ```
 
 After completing the steps, the values of the external measures are saved in a file with the format `true_{$DATASET}.pkl`. Additionally, the outputs are available in our Google Drive under the directory `$TASK/external_metric`.
@@ -149,7 +149,7 @@ All scripts to generate internal measure values for the evaluation are in the `a
    - Step 3: `collect_embedded_metric.py`: Collect and post-processes the calculated values. Run this step after completing Step 1 and Step 2 to collect and process abnormal values from the calculated internal measure scores frome the embedding data.
 
 2. **Generate Shell Scripts for Slurms**:
-   - `make.py`: Generates shell scripts for submission to SLURM, serving as a reference for users to create their own submission scripts. This script implements the first two steps across metrics, datasets, and tasks. To switch to the second step after completing the first, simply modify Line 28 from `step = 1` to `step = 2`.
+   - `make.py`: Generates shell scripts for submission to SLURM, serving as a reference for users to create their own submission scripts. This script implements the first two steps across metrics, datasets, and tasks. To switch to the second step after completing the first, simply modify Line 21 from `step = 1` to `step = 2`.
 
 After completing the steps, all internal scores calculated based on the embedding space $`\pi(\rho_{m'} | \mathcal{Z}_m)`$ for the Calinski-Harabasz Index, Davies-Bouldin Index, and Silhouette Score (using both Euclidean and cosine distances) are saved in a file with the format `merge_{$DATASET}_{$METRIC}_score.pkl`. Scores for the other metrics are stored in a file with the format `merge_other_{$DATASET}_{$METRIC}_score.pkl`. Additionally, the outputs are available in our Google Drive under the directory `$TASK/embedded_metric`.
 
