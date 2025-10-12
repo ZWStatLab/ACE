@@ -42,7 +42,7 @@ if __name__ == '__main__':
                     data = np.load(file)
                     for metric in metric_list:
                         value = data[metric]
-                        # convert invalid values from R function output to NaN
+                        # convert invalid and abnormal values from R function output to NaN
                         if value == True:
                             print('cv',value)
                             value = np.nan

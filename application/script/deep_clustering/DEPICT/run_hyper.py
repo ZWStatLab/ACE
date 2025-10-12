@@ -20,6 +20,6 @@ for dataset in datasets:
             os.system('rm done.o')
         except:
             print('continue')
-            continu
+            continue
       else:
         print('pass', outputfile)

@@ -2,7 +2,7 @@ import os,sys
 import time
 
 datasets = ['COIL-100', 'COIL-20', 'MNIST-test', 'USPS', 'CMU-PIE', 'FRGC',  'UMist', 'YTF']
-face = ['FRGC', 'UMist', 'YTF']
+face = ['FRGC', 'UMist', 'YTF', 'CMU-PIE']
 
 for dataset in datasets:
   if dataset == 'YTF':

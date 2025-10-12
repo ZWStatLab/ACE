@@ -10,7 +10,6 @@ from scipy.optimize import linear_sum_assignment
 from sklearn.metrics.cluster import normalized_mutual_info_score
 
 def clustering_accuracy(gtlabels, labels):
-    #print(gtlabels, labels)
     gtlabels = np.array(gtlabels, dtype='int64')
     labels = np.array(labels, dtype='int64')
     cnt_matrix = []
