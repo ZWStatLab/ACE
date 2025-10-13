@@ -83,7 +83,7 @@ eigenValues <- eigen(TT/(nn-1))$value
 for (i in 1:sizeEigenTT) 
 {
   if (eigenValues[i] < 0) {
-    is_cal_ccc <- FALSE # The TSS matrix should be indefinite for ccc calcuaation
+    is_cal_ccc <- FALSE # The TSS matrix should be indefinite for ccc calculation
   } 
 }
 
@@ -119,9 +119,9 @@ dunn = Index.dunn(md, cl1, Data=jeu, method=NULL) #max #depend on md matrix
 print('dunn')
 cind = - Indice.cindex(d=md, cl=cl1) #min #depend on md matrix
 print('cind')
-sdbw = - SDbw(jeu, cl1) #min # need data
+sdbw = - SDbw(jeu, cl1) #min
 print('sdbw')
-ccdbw = CDbw(jeu, cl1) #max # need data
+ccdbw = CDbw(jeu, cl1) #max
 print('cdbw')
   
 print('done')

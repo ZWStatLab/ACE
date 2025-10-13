@@ -144,7 +144,7 @@ if (grepl('COIL-100', key)){
   for (i in 1:sizeEigenTT) 
   {
     if (eigenValues[i] < 0) {
-      is_cal_ccc <- FALSE # The TSS matrix should be indefinite for ccc calcuaation
+      is_cal_ccc <- FALSE # The TSS matrix should be indefinite for ccc calculation
     } 
   }
 }
@@ -177,9 +177,9 @@ dunn = Dunn(md, cl1, Data=jeu, method=NULL) #max #depend on md matrix
 print('dunn')
 cind = - Cindex(d=md, cl=cl1) #min #depend on md matrix
 print('cind')
-sdbw = - SDbw(jeu, cl1) #min # need data
+sdbw = - SDbw(jeu, cl1) #min #
 print('sdbw')
-ccdbw = CDbw(jeu, cl1) #max # need data
+ccdbw = CDbw(jeu, cl1) #max #
 print('cdbw')
 print(ccdbw)
 print('done')
