@@ -32,24 +32,23 @@ if __name__ == '__main__':
             with open(os.path.join('file_list', task, "{}.txt".format(eval_data)), "r") as file:
                 modelFiles = [line.strip() for line in file.readlines()]
 
-            if eval_data not in ['COIL-100', 'UMist']:
-                for key in modelFiles:
-                    
-                    file = "{}/raw_tmp/rr_{}.npz".format(task, key)
-                    data = np.load(file)
-                    for metric in metric_list:
-                        value = data[metric]
-                        # handle abnormal function output values
-                        if value == True:
-                            print('cv',value)
-                            value = np.nan
-                        if value == -2147483648:
-                            print('cv',value)
-                            value = np.nan
-                        if math.isinf(value):
-                            print('cv',value)
-                            value = np.nan
-                        scored[metric][key] = value 
+            for key in modelFiles:
+
+                file = "{}/raw_tmp/rr_{}.npz".format(task, key)
+                data = np.load(file)
+                for metric in metric_list:
+                    value = data[metric]
+                    # handle abnormal function output values
+                    if value == True:
+                        print('cv',value)
+                        value = np.nan
+                    if value == -2147483648:
+                        print('cv',value)
+                        value = np.nan
+                    if math.isinf(value):
+                        print('cv',value)
+                        value = np.nan
+                    scored[metric][key] = value
 
 
             for metric in ['dav', 'ch', 'euclidean', 'cosine']:
