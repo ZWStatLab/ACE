@@ -4,15 +4,15 @@ Adaptive Clustering Evaluation (ACE) is an internal evaluation method designed t
 
 
 
-Suppose the clustering outputs consist of an embedding space (i.e., embedding data in our context) and partition outcomes, denoted as $\phi_m = (\mathcal{Z}_m, \rho_m)$ for $m \in \{1, \dots, M\}$. We consider a specific internal measure $\pi$ (e.g., the silhouette score) for evaluation. Let $\pi(\rho_{m'} | \mathcal{Z}_m)$ represent the internal score computed for the partition outcome $\rho_{m'}$ based on the embedding data $\mathcal{Z}_m$.  
+Suppose the clustering outputs consist of an embedding space (i.e., embedding data in our context) and partition outcomes, denoted as $`\phi_m = (\mathcal{Z}_m, \rho_m)`$ for $`m \in \{1, \dots, M\}`$. We consider a specific internal measure $`\pi`$ (e.g., the silhouette score) for evaluation. Let $`\pi(\rho_{m'} | \mathcal{Z}_m)`$ represent the internal score computed for the partition outcome $`\rho_{m'}`$ based on the embedding data $`\mathcal{Z}_m`$.  
 
-To compare different partition outcomes $\rho_1, \dots, \rho_M$, the ACE framework assigns a score to each $\rho_{m'}$, where $m' \in \{1, \dots, M\}$, through space screening and ensemble analysis. This results in the aggregated score:  
+To compare different partition outcomes $`\rho_1, \dots, \rho_M`$, the ACE framework assigns a score to each $`\rho_{m'}`$, where $`m' \in \{1, \dots, M\}`$, through space screening and ensemble analysis. This results in the aggregated score:  
 
 ```math
 \pi(\rho_{m'} | G_s) = \sum_{m \in G_s} w^{(s)}_m \pi(\rho_{m'} | \mathcal{Z}_m)
 ```
 
-where $G_s$ represents the selected group of spaces, and $w^{(s)}_m$ denotes the weight assigned to the internal score corresponding to each selected space.  
+where $`G_s`$ represents the selected group of spaces, and $`w^{(s)}_m`$ denotes the weight assigned to the internal score corresponding to each selected space.  
 
 ## Usage
 The code for simulation and real data analysis can be found in the `./simulation/*` and `./application/*` directories, respectively.
@@ -65,7 +65,7 @@ For each simulated dataset, internal scores and dip test results must be compute
 
 ### Evaluation for Real Data Analysis
 
-For the deep clustering evaluation conducted in the real data analysis, we provide the calculated internal measure scores, evaluated for each clustering result across different embedding spaces $\pi(\rho_{m'} | \mathcal{Z}_m)$ for $m, m' \in \{1, \dots, M\}$. These scores allow users to directly run the ACE evaluation script using them as input.
+For the deep clustering evaluation conducted in the real data analysis, we provide the calculated internal measure scores, evaluated for each clustering result across different embedding spaces $`\pi(\rho_{m'} | \mathcal{Z}_m)`$ for $`m, m' \in \{1, \dots, M\}`$. These scores allow users to directly run the ACE evaluation script using them as input.
 
 1. Download all the calculated internal and external measure values, along with other required inputs (dip test results) from the [Google Drive](https://drive.google.com/drive/folders/1TTGs3wBYJ1oQVIlkYt7geiEOu-WbXs8e?usp=drive_link) and save them to a local folder.
 
@@ -100,14 +100,14 @@ Download all the original datasets used to run and evaluate deep clustering algo
 
 | Object | Data Type | Description |
 |--------|-----------|-------------|
-| **File: $DATASET/data4torch.h5`** | | |
+| **File: `$DATASET/data4torch.h5`** | | |
 | `data` | ndarray | Image data used for clustering |
 | `labels` | ndarray | Ground truth partition labels |
 
 
 
 ### Run Deep Clustering Methods
-To run the deep clustering methods *JULE* and *DEPICT* for hyperparameter tuning and cluster number determination, first download their source codes from the original repositories ([JULE repository](https://github.com/jwyang/JULE.torch); [DEPICT repository](https://github.com/herandy/DEPICT)), ensuring access to at least one GPU. Install the required dependencies as specified in the repositories, then copy the scripts from `application/script/deep_clustering/JULE` and `application/script/deep_clustering/DEPICT` into their respective downloaded folders, and create a `datasets` folder to store the dataset files. The scripts `run_hyper.py` and `run_num.py` in each folder can be used to sequentially execute all tasks across datasets and configurations designated for hyperparameter tuning and cluster number determination. Additionally, we provide the saved clustering outputs ($\rho_{m}, \mathcal{Z}_m$) in [Google Drive](https://drive.google.com/drive/folders/1TTGs3wBYJ1oQVIlkYt7geiEOu-WbXs8e?usp=drive_link). For outputs generated from running *JULE*, the embedding data $\mathcal{Z}_m$ is stored in a file with the format `feature{$DATASET}{$CONFIG}.h5`, and the partition outcome $\rho_{m}$ is stored in a file with the format `label{$DATASET}{$CONFIG}.h5`. For outputs generated from running *DEPICT*, both the embedding data $\mathcal{Z}_m$ and the partition outcome $\rho_{m}$ are stored in a file with the format `output{$DATASET}_{$CONFIG}.npz`.
+To run the deep clustering methods *JULE* and *DEPICT* for hyperparameter tuning and cluster number determination, first download their source codes from the original repositories ([JULE repository](https://github.com/jwyang/JULE.torch); [DEPICT repository](https://github.com/herandy/DEPICT)), ensuring access to at least one GPU. Install the required dependencies as specified in the repositories, then copy the scripts from `application/script/deep_clustering/JULE` and `application/script/deep_clustering/DEPICT` into their respective downloaded folders, and create a `datasets` folder to store the dataset files. The scripts `run_hyper.py` and `run_num.py` in each folder can be used to sequentially execute all tasks across datasets and configurations designated for hyperparameter tuning and cluster number determination. Additionally, we provide the saved clustering outputs ($`\rho_{m}, \mathcal{Z}_m`$) in [Google Drive](https://drive.google.com/drive/folders/1TTGs3wBYJ1oQVIlkYt7geiEOu-WbXs8e?usp=drive_link). For outputs generated from running *JULE*, the embedding data $`\mathcal{Z}_m`$ is stored in a file with the format `feature{$DATASET}{$CONFIG}.h5`, and the partition outcome $`\rho_{m}`$ is stored in a file with the format `label{$DATASET}{$CONFIG}.h5`. For outputs generated from running *DEPICT*, both the embedding data $`\mathcal{Z}_m`$ and the partition outcome $`\rho_{m}`$ are stored in a file with the format `output{$DATASET}_{$CONFIG}.npz`.
 
 The content in these files follows the structure below:
 
@@ -138,7 +138,7 @@ Example for the JULE hyperparameter experiment on the COIL-20 dataset:
 python script/get_truth.py --dataset COIL-20 --task JULE_hyper
 ```
 
-After completing the steps, the values of the external measures are saved in a file with the format `true_{$DATASET}.pkl`. Additionally, the outputs are available in our Google Drive under the directory $TASK/external_metric`.
+After completing the steps, the values of the external measures are saved in a file with the format `true_{$DATASET}.pkl`. Additionally, the outputs are available in our Google Drive under the directory `$TASK/external_metric`.
 
 ### Generate Internal Measure Values
 All scripts to generate internal measure values for the evaluation are in the `application/scripts/embedded_metric` folder. Since some internal measure values can only be obtained through R packages, both R and Python scripts are used. When running these scripts, ensure that the `file_list` folder, the `datasets` folder, and all task folders (i.e., the ones downloaded from Google Drive) are located in the same directory as the scripts. Similarly, we provide the `make.py` script to automate the execution of our scripts by generating shell scripts for cluster submission. Customize the script to fit your computing environment and directory structure as needed.
@@ -151,7 +151,7 @@ All scripts to generate internal measure values for the evaluation are in the `a
 2. **Generate Shell Scripts for Slurms**:
    - `make.py`: Generates shell scripts for submission to SLURM, serving as a reference for users to create their own submission scripts. This script implements the first two steps across metrics, datasets, and tasks. To switch to the second step after completing the first, simply modify Line 21 from `step = 1` to `step = 2`.
 
-After completing the steps, all internal scores calculated based on the embedding space $\pi(\rho_{m'} | \mathcal{Z}_m)$ for the Calinski-Harabasz Index, Davies-Bouldin Index, and Silhouette Score (using both Euclidean and cosine distances) are saved in a file with the format `merge_{$DATASET}_{$METRIC}_score.pkl`. Scores for the other metrics are stored in a file with the format `merge_other_{$DATASET}_{$METRIC}_score.pkl`. Additionally, the outputs are available in our Google Drive under the directory $TASK/embedded_metric`.
+After completing the steps, all internal scores calculated based on the embedding space $`\pi(\rho_{m'} | \mathcal{Z}_m)`$ for the Calinski-Harabasz Index, Davies-Bouldin Index, and Silhouette Score (using both Euclidean and cosine distances) are saved in a file with the format `merge_{$DATASET}_{$METRIC}_score.pkl`. Scores for the other metrics are stored in a file with the format `merge_other_{$DATASET}_{$METRIC}_score.pkl`. Additionally, the outputs are available in our Google Drive under the directory `$TASK/embedded_metric`.
 
 
 ### Generate Raw Scores
@@ -166,7 +166,7 @@ Scripts for generating internal measure values used for the evaluation are in th
 2. **Generate Shell Scripts for Slurms**:
    - `make.py`: Generates shell scripts for submission to SLURM, serving as a reference for users to create their own submission scripts. This script implements the first two steps across metrics, datasets, and tasks. To switch to the second step after completing the first, simply modify Line 18 from `step = 1` to `step = 2`.
 
-After completing the steps, all internal scores calculated based on the raw space $\pi(\rho_{m'} | \mathcal{X})$ for all metrics are saved in a file with the format `merge_all_{$METRIC}_score.pkl`. Additionally, the outputs are available in our Google Drive under the directory $TASK/raw_metric`.
+After completing the steps, all internal scores calculated based on the raw space $`\pi(\rho_{m'} | \mathcal{X})`$ for all metrics are saved in a file with the format `merge_all_{$METRIC}_score.pkl`. Additionally, the outputs are available in our Google Drive under the directory `$TASK/raw_metric`.
 
 ### Dip Test
 Scripts for conducting the Dip test on embedding data derived from JULE and DEPICT are located in the `application/scripts/dip` folder. The scripts `clusterable_DEPICT.R` and `clusterable_jule.R` are specifically designed to perform Dip tests on embedding data obtained from DEPICT and JULE, respectively.  When running these scripts, ensure that the `file_list` folder, the `datasets` folder, and all task folders (i.e., the ones downloaded from Google Drive) are located in the same directory as the scripts.
@@ -181,22 +181,22 @@ To execute the tests, use the following commands:
   Rscript clusterable_jule.R $dataset $embedding_file1 $embedding_file2 $embedding_file3 ...
   ```  
 
-Additionally, we provide `make_DEPICT.py` and `make_jule.py`, which generate shell scripts for submission to SLURM. These scripts facilitate running the tests across all embedding data generated for various datasets and tasks. After completing the steps, the results of the DIP test are saved in a file with the format `dip_{$DATASET}.npz`. Additionally, the outputs are available in our Google Drive under the directory $TASK/dip_test`.
+Additionally, we provide `make_DEPICT.py` and `make_jule.py`, which generate shell scripts for submission to SLURM. These scripts facilitate running the tests across all embedding data generated for various datasets and tasks. After completing the steps, the results of the DIP test are saved in a file with the format `dip_{$DATASET}.npz`. Additionally, the outputs are available in our Google Drive under the directory `$TASK/dip_test`.
 
 The structure of the files saved from the calculation of internal measure scores, external measure scores, and Dip test results is as follows:  
 
 | Object | Data Type | Description                                                                                                                                                                             |
 |--------|-----------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **File: $TASK/external_metric/true_{$DATASET}.pkl`** | |                                                                                                                                                                                         |
+| **File: `$TASK/external_metric/true_{$DATASET}.pkl`** | |                                                                                                                                                                                         |
 | `nmv` | dict | Key: Tag names of the evaluated partitioning outcomes; Value: NMI score                                                                                                                 |
 | `acv` | dict | Key: Tag names of the evaluated partitioning outcomes; Value: ACC score                                                                                                                 |
-| **File: $TASK/embedded_metric/merge_{$DATASET}_{$METRIC}_score.pkl`** | |                                                                                                                                                                                         |
+| **File: `$TASK/embedded_metric/merge_{$DATASET}_{$METRIC}_score.pkl`** | |                                                                                                                                                                                         |
 | `scored` | dict | Key: Tag name of the evaluated embedding space; Value: A dictionary where the key is the tag name of the evaluated partitioning outcome and the value is the corresponding metric score |
-| **File: $TASK/embedded_metric/merge_other_{$DATASET}_{$METRIC}_score.pkl`** | |                                                                                                                                                                                         |
+| **File: `$TASK/embedded_metric/merge_other_{$DATASET}_{$METRIC}_score.pkl`** | |                                                                                                                                                                                         |
 | `scored` | dict | Key: Tag name of the evaluated embedding space; Value: A dictionary where the key is the tag name of the evaluated partitioning outcome and the value is the corresponding metric score |
-| **File: $TASK/raw_metric/merge_all_{$METRIC}_score.pkl`** | |                                                                                                                                                                                         |
+| **File: `$TASK/raw_metric/merge_all_{$METRIC}_score.pkl`** | |                                                                                                                                                                                         |
 | `scored` | dict | Key: Metric name; Value: A dictionary where the key is the tag name of the evaluated partitioning outcome and the value is the corresponding score for the metric                       |
-| **File: $TASK/dip_test/dip_{$DATASET}.npz`** | |                                                                                                                                                                                         |
+| **File: `$TASK/dip_test/dip_{$DATASET}.npz`** | |                                                                                                                                                                                         |
 | `pvalues1` | ndarray | P-values from Dip tests                                                                                                                                                                 |
 | `models` | ndarray | Tag names for the dataset and all tested spaces                                                                                                                                         |
 
