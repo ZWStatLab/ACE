@@ -2,7 +2,6 @@ library(lsa)
 library(reticulate)
 library(fpc)
 library(R.utils)
-use_python("~/miniconda/envs/myenvR/bin/python", required = TRUE)
 
 np <- import("numpy")
 source('helper.r')
