@@ -115,12 +115,10 @@ if __name__ == '__main__':
 
     if eval_data in ['COIL-100']:
         jeu0, TT0, md0, cmd0 = gen_value(data, False)
-        vv0 = 0 
-        ss0 = 0
     else:
-        jeu0, TT0, ss0, vv0, md0, cmd0 = gen_value(data)
+        jeu0, TT0, _, _, md0, cmd0 = gen_value(data)
     
-    np.savez(os.path.join(tmppath, 'data_{}.npz'.format(eval_data)), jeu=jeu0, TT=TT0, ss=ss0, vv=vv0, md=md0, cmd=cmd0)
+    np.savez(os.path.join(tmppath, 'data_{}.npz'.format(eval_data)), jeu=jeu0, TT=TT0, md=md0, cmd=cmd0)
 
 
     for key in modelFiles:
@@ -129,7 +127,7 @@ if __name__ == '__main__':
         scored[metric][key] = clustering_score(data, y, metric=metric)
         scored['nmi'][key] = normalized_mutual_info_score(truth, y)
         scored['acc'][key] = clustering_accuracy(truth, y)
-        np.savez(outf, labelset=np.array(y), jeu=jeu0, TT=TT0, ss=ss0, vv=vv0, md=md0, cmd=cmd0)
+        np.savez(outf, labelset=np.array(y), jeu=jeu0, TT=TT0, md=md0, cmd=cmd0)
 
 
     with open(os.path.join(tpath,'merge_{}_{}_score.pkl'.format(eval_data, metric)), 'wb') as file:
