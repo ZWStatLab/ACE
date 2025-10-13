@@ -173,7 +173,7 @@ if (is_cal_ccc){
 
 
 print('ccc')
-dunn = Dunn(md, cl1, Data=jeu, method=NULL) #max Index.dunn(md, cl1); depend on md matrix
+dunn = Dunn(md, cl1, Data=jeu, method=NULL) #max #depend on md matrix
 print('dunn')
 cind = - Cindex(d=md, cl=cl1) #min #depend on md matrix
 print('cind')

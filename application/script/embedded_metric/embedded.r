@@ -115,7 +115,7 @@ if (is_cal_ccc){
     ccc=NA
 }
 
-dunn = Index.dunn(md, cl1, Data=jeu, method=NULL) #max Index.dunn(md, cl1); depend on md matrix
+dunn = Index.dunn(md, cl1, Data=jeu, method=NULL) #max #depend on md matrix
 print('dunn')
 cind = - Indice.cindex(d=md, cl=cl1) #min #depend on md matrix
 print('cind')
