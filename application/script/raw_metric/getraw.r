@@ -100,7 +100,6 @@ Dunn<-function(md, cl, Data, method) {
 
 
 # cindex
-#Indice.cindex(d=md, cl=cl1)
 Cindex1<-function(d,cl) {
   result <- tryCatch({
     Indice.cindex(d, cl)
