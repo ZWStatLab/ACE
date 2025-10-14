@@ -79,6 +79,5 @@ elif step == 2:
                     outf.write('module load R/4.1.2\n')
                     outf.write('Rscript getraw.r {} {}\n'.format(task, m1))
                     outf.close()
-                    if dataset != 'COIL-100':
-                        subf.write('os.system("sbatch %s")\n' % jobName)
+                    subf.write('os.system("sbatch %s")\n' % jobName)
     subf.close()
