@@ -69,7 +69,7 @@ elif step == 2:
                     outf.write('#!/bin/bash\n')
                     outf.write('\n')
                     outf.write('#SBATCH --partition=stats_medium\n')
-                    outf.write('#SBATCH --nodes=1 --mem=32G --time=24:00:00\n')
+                    outf.write('#SBATCH --nodes=1 --mem=96G --time=24:00:00\n')
                     outf.write('#SBATCH --ntasks=1\n')
                     outf.write('#SBATCH --cpus-per-task=1\n')
                     outf.write('#SBATCH --output=slurm-%A.%a.out\n')
