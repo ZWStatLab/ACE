@@ -25,10 +25,8 @@ def cut_digit(x):
             if x0 in ['USPS', 'UMist', 'COIL-20', 'COIL-100', 'YTF', 'FRGC', 'MNIST-test', 'CMU-PIE']:
                 return x
             else:
-                #print(x0,x1)
                 return ' '.join([str(round(float(x0), 2)), str(x1)])
     else:
-        #return round(x, 2)
         return x
 
 
@@ -92,8 +90,6 @@ def short_name(df, ext):
         if ext in c:
             cc=c.split('vs {}'.format(ext))
             cc = ''.join(cc).rstrip()
-        # else:
-        #     cc = c
             idnames[c]=cc
     return  idnames
 

@@ -39,7 +39,6 @@ latent_cov_matrix = (cluster_std ** 2) * np.eye(n_latent_features)
 if option == 'dense':
     dense_cov_matrix = (cluster_std ** 2) * np.eye(n_dense_features)
 
-# Generate high-dimensional data
 std = 1
 mean_clusters = np.random.multivariate_normal(np.zeros(n_latent_features), (std ** 2) * np.eye(n_latent_features), size=n_clusters)
 print('mean_clusters', mean_clusters.shape)
@@ -48,8 +47,7 @@ if option == 'dense':
     mean_clusters_dense = np.random.multivariate_normal(np.zeros(n_dense_features), (std_dense ** 2) * np.eye(n_dense_features), size=n_clusters)
     print('mean_clusters_dense', mean_clusters_dense.shape)
 
-# Initialize data array
-X_latent = np.zeros((n_samples, n_latent_features))  
+X_latent = np.zeros((n_samples, n_latent_features))
 if option == 'dense':
     X_dense = np.zeros((n_samples, n_dense_features)) 
 
@@ -60,11 +58,9 @@ stop = 0
 for i in range(n_clusters):
     start, stop = stop, stop + n_samples_per_cluster
     y[start:stop] = i
-    # Generate data for the current cluster
     cluster_data = np.random.multivariate_normal(
         mean=mean_clusters[i], cov=latent_cov_matrix, size=n_samples_per_cluster
     )
-    # Assign generated data given the corresponding indices
     X_latent[start:stop] = cluster_data
     if option == 'dense':
         cluster_data_dense = np.random.multivariate_normal(
