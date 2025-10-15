@@ -12,7 +12,7 @@ for dataset in datasets:
       outputfile = "outputFRGC_20_{}_{}_1.0.npz".format(lr, rh)
       if not os.path.isfile(outputfile):
         try:
-            cmd = 'python DEPICT_hyper.py --dataset={} --learning_rate={} --reconstruct_hyperparam={}  > {}_{}_{}.log'.format(dataset, lr, rh)
+            cmd = 'python DEPICT_hyper.py --dataset={} --learning_rate={} --reconstruct_hyperparam={}'.format(dataset, lr, rh)
             print(cmd)
             os.system(cmd)
             while not os.path.isfile('done.o'):
