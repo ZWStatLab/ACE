@@ -12,7 +12,7 @@ tasksv = {'sim_dense_1.0': r'Example 2 ($\sigma = 1$)','sim_dense_2.0': 'Example
           'sim_sparse_1.0': r'Example 1 ($\sigma = 1$)', 'sim_sparse_2.0': r'Example 1 ($\sigma = 2$)'}
 
 strategys= ['raw', 'pair', 'pool', 'ace']
-strategys_legend= ['Raw score', 'Paired score', 'Pooled score', 'ACE', 'True K']
+strategys_legend= ['Raw score', 'Paired score', 'Pooled score', 'ACE']
 index = ['Davies-Bouldin', 'Calinski-Harabasz', 'Silhouette (cosine)', 'Silhouette (euclidean)']
 
 
