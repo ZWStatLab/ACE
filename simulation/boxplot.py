@@ -17,7 +17,6 @@ index = ['Davies-Bouldin', 'Calinski-Harabasz', 'Silhouette (cosine)', 'Silhouet
 
 
 strategy_colors = {
-'truth': mpl.colors.cnames["steelblue"],
 'raw': '#FFB6C1',
 'pair': '#90EE90',
 'pool':  'lightgrey',
