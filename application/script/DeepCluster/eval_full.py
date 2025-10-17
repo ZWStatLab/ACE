@@ -75,7 +75,7 @@ if __name__ == '__main__':
         cor_label, _ = spearmanr(label_score, nmv)
         cor_st, _ = spearmanr(st_score, nmv)
         cor_sv, _ = spearmanr(sv, nmv)
-        nmi_tau.append([metric, tau_st,tau_label, tau_sv])
+        nmi_tau.append([metric, tau_st, tau_label, tau_sv])
         nmi_cor.append([metric, cor_st, cor_label, cor_sv])
 
         tau_label, _ = kendalltau(label_score, acv)

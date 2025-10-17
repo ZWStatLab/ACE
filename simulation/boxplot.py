@@ -48,7 +48,7 @@ for ext in ['nmi', 'acc']:
                 start = i * 4
                 end = start + 4
                 bp = ax.boxplot(data[:, ::-1], positions=positions[start:end], patch_artist=True,  boxprops=dict(linewidth=2, color="black"),
-                                widths=0.75, flierprops=flierprops,  medianprops=medianprops, showmeans=True, meanprops=meanprops)  
+                                widths=0.75, flierprops=flierprops,  medianprops=medianprops, showmeans=True, meanprops=meanprops)
                 for patch, color, hatch in zip(bp['boxes'], colors, hatch_styles):
                     patch.set_facecolor(color)
                     patch.set_hatch(hatch)
