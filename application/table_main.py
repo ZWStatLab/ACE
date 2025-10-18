@@ -101,7 +101,7 @@ def transpose(df):
 
 def row_max_indices(row):
     max_val = row.max()  
-    return row[row == max_val].index.tolist()  # return all column indices where the value equals the max
+    return row[row == max_val].index.tolist()
 
 root_dir = '.'
 
@@ -219,7 +219,7 @@ for task in tasks:
             else:
                 result_df = pd.concat([result_df, tb.rename(index=lambda x: f"{x}_{i}")], axis=0)
 
-        result_df.index = result_df.index.str.replace('_', ' ') # for horizontal table
+        result_df.index = result_df.index.str.replace('_', ' ')
         subcols = create_subcol(result_df.columns.tolist())
         result_df.columns = pd.MultiIndex.from_tuples(subcols)
         result_df = result_df.sort_index(axis=1, level=0, ascending=False)
@@ -278,7 +278,7 @@ for task in tasks:
     if ('num' in task) and (ext == 'nmi'):
         with open('n_{}.pkl'.format(task), 'wb') as op:
             pk.dump(ncluster1, op)
-        ncluster = pd.DataFrame(ncluster).T  # Transpose to get rows as the original keys
+        ncluster = pd.DataFrame(ncluster).T
         ncluster.to_csv('n_{}.csv'.format(task), index=True)
 
 outputs = start + ''.join(outputs) + end

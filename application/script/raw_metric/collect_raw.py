@@ -58,7 +58,6 @@ if __name__ == '__main__':
                     print(len(value))
                     scored[key] = value
 
-            #print(scored)
             with open('{}/raw_metric/merge_all_{}_score.pkl'.format(task, eval_data), 'wb') as file:
                 pk.dump(scored, file)
 
