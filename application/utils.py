@@ -13,19 +13,6 @@ import pickle as pk
 import matplotlib.pyplot as plt
 import h5py
 
-def clustering_accuracy(gtlabels, labels):
-    '''
-    return clustering accuracy
-    '''
-    cnt_matrix = []
-    categories = np.unique(gtlabels)
-    nr = np.amax(labels) + 1
-    for i in np.arange(len(categories)):
-      cnt_matrix.append(np.bincount(labels[gtlabels == categories[i]], minlength=nr))
-    cnt_matrix = np.asarray(cnt_matrix).T
-    row_ind, col_ind = linear_sum_assignment(np.max(cnt_matrix) - cnt_matrix)
-    return float(cnt_matrix[row_ind, col_ind].sum()) / len(gtlabels)
-
 def plot_tsne(X, y, title):
     '''
     make tsne plot
