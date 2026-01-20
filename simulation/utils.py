@@ -259,12 +259,9 @@ def collect_all_scores(all_scores, modelFiles):
     for m in modelFiles:
         scores_row = []
         for n in modelFiles:
-            if n not in all_scores[m].keys():
-                s = 0
-            else:
-                s = all_scores[m][n]
-                if isinstance(s, np.ndarray):
-                    s = s.item()
+            s = all_scores[m][n]
+            if isinstance(s, np.ndarray):
+                s = s.item()
             if s == None:
                 s = np.nan
             scores_row.append(s)
